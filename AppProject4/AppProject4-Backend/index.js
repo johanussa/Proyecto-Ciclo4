@@ -1,6 +1,9 @@
+import { ApolloServer } from 'apollo-server-express';
+import { typesDefs } from './src/graphQL/TypeDefs';
+import { resolvers } from './src/graphQL/Resolvers';
+import DataBase from './src/database/DataBase';
 import mongoose from 'mongoose';
 import app from './app';
-import DataBase from './src/database/DataBase';
 
 mongoose.connect(DataBase.db, {     
     useNewUrlParser: true,
@@ -9,6 +12,13 @@ mongoose.connect(DataBase.db, {
     .then( () => console.log("La Base de datos se ha Conectado Correctamente"))    
     .catch(error => console.log("Error de Conexion ", error));
 
-app.listen(DataBase.port, () => {
-    console.log(`Api Rest corriendo en el puerto #${ DataBase.port }`);
+const server = new ApolloServer({
+    typeDefs: typesDefs,
+    resolvers: resolvers
+}); 
+
+app.listen(DataBase.port, async () => {
+    await server.start();
+    server.applyMiddleware({ app });
+    console.log(`Api GraphQL on Port #${ DataBase.port }`);
 });
