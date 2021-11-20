@@ -7,6 +7,12 @@ const resolversProject = {
             if (projects.length === 0) { return "No hay Registros en la base de datos"; }
             else { return projects; } 
         }, 
+        getOneProject: async (parent, args) => {
+            const query = { _id: args._id };
+            const project = await ProjectModel.findById(query);
+            if (project) { return project; } 
+            else { console.log("El ID " + args._id + " No Existe en DB"); }
+        },
     }, 
     Mutation: {
         addProject: async (parent, args) => {
@@ -33,13 +39,7 @@ const resolversProject = {
                     if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
                 }
             } catch (e) { return `El ID ${ args._id } No se encuentra Registrado`; }            
-        },
-        getOneProject: async (parent, args) => {
-            const query = { _id: args._id };
-            const project = await ProjectModel.findById(query);
-            if (project) { return project; } 
-            else { console.log("El ID " + args._id + " No Existe en DB"); }
-        },
+        },        
     },
 };
 

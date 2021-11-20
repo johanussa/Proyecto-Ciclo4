@@ -33,6 +33,7 @@ const typeProject = gql `
     }
     type Query {
         allProyectos: [Proyecto] 
+        getOneProject( _id: ID! ) : Proyecto
     }
     type Mutation {
         addProject(
@@ -68,10 +69,6 @@ const typeProject = gql `
             Est_Inscritos: [crearStudent]  
             state: String
         ) : String
-
-        getOneProject(
-            _id: ID!
-        ) : Proyecto
     }
 `;
 
