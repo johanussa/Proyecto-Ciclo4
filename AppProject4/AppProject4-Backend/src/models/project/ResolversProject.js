@@ -25,16 +25,9 @@ const resolversProject = {
         }, 
         deleteProject: async (parent, args) => {
             const query = { _id: args._id };
-            let res = 9;
-            ProjectModel.findOneAndDelete(query, (err, project) => {
-                if (project) { 
-                    console.log(`ID ${ args._id } eliminado !!`);
-                    res = 1; }
-                else { 
-                    console.log(`ID ${ args._id } No encontrado !!`);
-                    res = 0; }
-            }); 
-            return res;
+            const project = await ProjectModel.findOneAndDelete(query); 
+            if (project) { return `ID ${ args._id } Eliminado !!`; }
+            else { return `ID ${ args._id } No encontrado !!`; }             
         },
     },
 };
