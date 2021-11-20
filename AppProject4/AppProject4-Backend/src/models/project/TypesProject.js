@@ -67,7 +67,6 @@ const typeProject = gql `
             Estado: Estado_Proj
             Fase: Fase_Proj  
             Est_Inscritos: [crearStudent]  
-            state: String
         ) : String
     }
 `;

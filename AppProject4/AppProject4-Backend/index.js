@@ -9,8 +9,8 @@ mongoose.connect(DataBase.db, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })  
-    .then( () => console.log("La Base de datos se ha Conectado Correctamente"))    
-    .catch(error => console.log("Error de Conexion ", error));
+    .then( () => console.log("Data Base MongoAtlas Connected!!"))    
+    .catch(error => console.log("Connect wrong ", error));
 
 const server = new ApolloServer({
     typeDefs: typesDefs,

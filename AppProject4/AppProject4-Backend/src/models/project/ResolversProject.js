@@ -4,7 +4,7 @@ const resolversProject = {
     Query: {
         allProyectos: async (parent, args) => {
             const projects = await ProjectModel.find();
-            if (projects.length === 0) { return "No hay Registros en la base de datos"; }
+            if (projects.length == 0) { return "No hay Registros en la base de datos"; }
             else { return projects; } 
         }, 
         getOneProject: async (parent, args) => {
@@ -33,7 +33,6 @@ const resolversProject = {
             try {
                 const query = { _id: args._id }; 
                 const project = await ProjectModel.findOne(query);
-                console.log(typeof(args._id));
                 if (project) {
                     const projectUpdate = await ProjectModel.updateOne(query, args);
                     if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
