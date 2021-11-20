@@ -52,6 +52,26 @@ const typeProject = gql `
         deleteProject(
             _id: ID!
         ) : String
+
+        updateProject(
+            _id: ID!
+            Nombre: String
+            Ob_Generales: String
+            Ob_Especificos: String
+            Presupuesto: Float
+            Fecha_Inicio: Date
+            Fecha_Terminacion: Date
+            Id_Lider: String
+            Nom_Lider: String
+            Estado: Estado_Proj
+            Fase: Fase_Proj  
+            Est_Inscritos: [crearStudent]  
+            state: String
+        ) : String
+
+        getOneProject(
+            _id: ID!
+        ) : Proyecto
     }
 `;
 
