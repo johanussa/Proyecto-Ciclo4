@@ -4,7 +4,7 @@ const resolversProject = {
     Query: {
         allProyectos: async (parent, args) => {
             const projects = await ProjectModel.find();
-            if (projects.length == 0) { return "No hay Registros en la base de datos"; }
+            if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
             else { return projects; } 
         }, 
         getOneProject: async (parent, args) => {
