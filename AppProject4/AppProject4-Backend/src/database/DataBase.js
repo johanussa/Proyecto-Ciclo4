@@ -1,6 +1,6 @@
+const dotenv = require('dotenv').config();
+
 module.exports = {
-    port: process.env.PORT || 3003,
-    db: process.env.MONGODB || "mongodb+srv://adminApp:0000@vitafamilydb.iq2cq.mongodb."
-        + "net/AppProject?retryWrites=true&w=majority"
-    //db: process.env.MONGODB || "mongodb+srv://admin:admin1234@alphateam21.lt7uc.mongodb.net/alphateam21?retryWrites=true&w=majority"
+    port: process.env.PORT || 3002,
+    db: process.env.MONGODB || "mongodb://127.0.0.1:27017"
 };
