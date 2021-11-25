@@ -14,7 +14,7 @@ mongoose.connect(DataBase.db, {
 
 const server = new ApolloServer({
     typeDefs: typesDefs,
-    resolvers: resolvers
+    resolvers
 }); 
 
 app.listen(DataBase.port, async () => {
