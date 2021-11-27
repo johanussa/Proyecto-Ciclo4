@@ -16,6 +16,7 @@ const resolversProject = {
     }, 
     Mutation: {
         addProject: async (parent, args) => {
+            console.log(args);
             const query = { Nombre: args.Nombre };
             const projectDB = await ProjectModel.find(query);    
             if (projectDB.length == 0) {                    
