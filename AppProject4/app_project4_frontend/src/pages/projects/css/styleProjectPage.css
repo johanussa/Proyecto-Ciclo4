@@ -1,0 +1,29 @@
+.fa-laptop-house {
+    font-size: 100px;
+    text-align: center;
+    padding-top: 10px;
+    color: brown;
+}
+.fa-address-card {
+    font-size: 100px;
+    text-align: center;
+    padding-top: 10px;
+    color: cadetblue;
+}
+.fa-chart-line {
+    font-size: 100px;
+    text-align: center;
+    padding-top: 10px;
+    color: brown;
+}
+.container {
+    margin-right: 10px;
+}
+.card-footer {
+    border: solid 1px rgb(228, 228, 228);
+    background-color: rgb(246, 250, 253);
+    text-align: center;
+}
+.input-group-text {
+    width: 114px;
+}
