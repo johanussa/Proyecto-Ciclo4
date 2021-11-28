@@ -1,53 +1,69 @@
 import React from 'react';
 import './css/styleSidebar.css';
+import Logo from '../images/Alpha_Team_logo.png';
 import { Link } from "react-router-dom";
 
 export default function SideBar() {
+
     return (
-        <div>
-            <div id="divMain" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" >
-                <Link to='/' class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32"><use href="#bootstrap"/></svg>
-                    <span class="fs-4">Alpha Team</span>
-                </Link>
-                <hr/>
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <Link to='/' class="nav-link active" aria-current="page">
-                            <svg class="bi me-2" width="16" height="16"><use href="/"/></svg>Inicio
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/usuarios' class="nav-link text-white">
-                            <svg class="bi me-2" width="16" height="16"><use href="/usuarios"/></svg>Usuarios
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/proyectos' class="nav-link text-white">
-                            <svg class="bi me-2" width="16" height="16"><use href="#table"/></svg>Todos los Proyectos
-                        </Link>
-                    </li>   
-                    <li>
-                        <Link to='/Misproyectos' class="nav-link text-white">
-                            <svg class="bi me-2" width="16" height="16"><use href="#table"/></svg>Ir a Mis Proyectos
-                        </Link>
-                    </li>                   
-                </ul>
-                <hr/>
-                <div class="dropdown">
-                    <a href="/" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" 
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2" />
-                        <strong>Johan Sebastian Ussa</strong>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                        <li><Link to='/' class="dropdown-item">Configuracion</Link></li>
-                        <li><Link to='/' class="dropdown-item">Perfil</Link></li>
-                        <li><hr class="dropdown-divider"/></li>
-                        <li><Link to='/' class="dropdown-item">Cerrar Sesion</Link></li>
-                    </ul>
+        <div className="sidebar body">
+            <div className="logoContent">
+                <div className="logo logoLink">
+                    <i className="fab fa-atlassian"></i>
+                    <div className="nameLogo">Alpha Team</div>                    
                 </div>
+                <i id="btn" className="fab fa-elementor" onClick={ () => {
+                    const sidebar = document.querySelector(".sidebar");
+                    sidebar.classList.toggle("active");
+                } }></i>
             </div>
+            <div className="logoAlpha">
+                <img id="logoEdit" src={ Logo } alt="Alpha Team" />
+            </div>
+            <ul className="navList">
+                <li>
+                    <Link to="/" className="links" id="inicio" >
+                        <i className="fas fa-laptop-house"></i>
+                        <span className="linksName">Inicio</span>                        
+                    </Link>
+                    <span className="tooltip">Inicio</span>
+                </li>
+                <li>
+                    <Link to="/usuarios" className="links" >
+                        <i className="fas fa-users"></i>
+                        <span className="linksName">Usuarios</span>                        
+                    </Link>
+                    <span className="tooltip">Usuarios</span>
+                </li>
+                <li>
+                    <Link to="/proyectosAdmin" className="links" >
+                        <i className="fas fa-users-cog"></i>
+                        <span className="linksName">Proyectos Admin</span>                        
+                    </Link>
+                    <span className="tooltip">Proyectos Admin</span>
+                </li>
+                <li>
+                    <Link to="/proyectosLider" className="links">
+                        <i className="fas fa-user-shield"></i>
+                        <span className="linksName">Proyectos Lider</span>                        
+                    </Link>
+                    <span className="tooltip">Proyectos Lider</span>
+                </li>
+                <li>
+                    <Link to="/proyectosEstud" className="links">
+                        <i className="fas fa-user-graduate"></i>
+                        <span className="linksName">Proyectos Estudiante</span>                        
+                    </Link>
+                    <span className="tooltip">Pro. Estudiante</span>
+                </li>
+                <li>
+                    <Link to="/misProyectos" className="links">
+                        <i class="fas fa-code-branch"></i>
+                        <span className="linksName">Mis Proyectos</span>                        
+                    </Link>
+                    <span className="tooltip">Mis Proyectos</span>
+                </li>
+            </ul>
         </div>
     )
 }

@@ -1,9 +1,12 @@
 import React from "react";
 import LoginPage from "./pages/login/LoginPage";
-import ProjectsPage from './pages/projects/ProjectsPage';
 import SideBar from "./Components/sidebar/SideBar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UsersPage from "./pages/users/UsersPage";
+import MyProjects from "./pages/projects/myProjects/MyProjects";
+import ProjectsAdmin from "./pages/projects/projectsAdmin/ProjectsAdmin";
+import ProjectsEstud from "./pages/projects/projectsEstud/ProjectsEstud";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProjectsLiderPage from './pages/projects/projectsLider/ProjectsLiderPage';
 
 function App() {
   return (
@@ -13,7 +16,10 @@ function App() {
         <Routes>
           <Route path='/' element={ <LoginPage /> } />
           <Route path='/usuarios' element={ <UsersPage /> } />
-          <Route path='/proyectos' element={ <ProjectsPage /> } />
+          <Route path='/proyectosAdmin' element={ <ProjectsAdmin /> } />
+          <Route path='/proyectosLider' element={ <ProjectsLiderPage /> } />
+          <Route path='/proyectosEstud' element={ <ProjectsEstud /> } />
+          <Route path='/misProyectos' element={ <MyProjects /> } />
         </Routes>
       </Router> 
     </div>
