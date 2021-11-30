@@ -1,4 +1,4 @@
-.bodyLider { background-color: azure; }
+.bodyLider { background-color: rgb(240, 250, 255); }
 #iconProject {
     width: 80px;
     margin: 30px;
@@ -10,34 +10,34 @@
     text-shadow: 2px 2px 2px rgb(16, 102, 168);
     font-family: serif;
 }
-.hrProject {
-    color: rgb(37, 120, 150);
-}
+.hrProject { color: rgb(37, 120, 150); }
 legend {
     font-family: serif;
     font-size: 30px;
     margin-left: 25px;
-    float: left;
 }
-#floatingTextarea {
-    min-height: 100px;
-}
-#containMain {
-    margin-right: 65px;
-}
+#floatingTextarea { min-height: 100px; }
+#containMain { margin-right: 65px; }
 .setDivProject {
     max-width: 100%;
     margin: 25px auto;
     text-align: right;
 }
-.setBtnProject {
-    width: 50%;
-}
-#div2Project {
-    text-align: left;
-}
+.setBtnProject { width: 50%; } 
+#div2Project { text-align: left; }
 .fa-external-link-alt {
     font-size: 22px;
     color: #10171d;
     padding-right: 10px;
+}
+.col-md-4 { flex: 1 0 auto; }
+.headColor {
+    color: #fff;
+    background-color: rgb(45, 82, 122);
+}
+.iconCard {
+    font-size: 35px;
+    width: 60px;
+    margin: auto;
+    text-align: center;  
 }

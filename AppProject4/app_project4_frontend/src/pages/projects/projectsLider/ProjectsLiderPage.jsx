@@ -55,7 +55,61 @@ export default function ProjectsPage() {
                         </button>                         
                     </div> 
                     <legend>{ icons[0] } Proyectos Registrados</legend> 
-                </form>                           
+                    <div id="divCards" className="card-group row g-3">
+                        <div className="col-md-4">
+                            <div class="card text-dark mb-3">
+                                <div class="card-header headColor row g-0">
+                                    <div className="col-md-3 mt-1"><i class="fas fa-shield-virus iconCard"></i></div>
+                                    <div className="col-md-9">
+                                        Nombre del Proyecto
+                                    </div>                                    
+                                </div>
+                                <div class="card-body">                                   
+                                    <h5 class="card-title">Autor</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>  
+                        <div className="col-md-4">
+                            <div class="card text-dark mb-3">
+                                <div class="card-header headColor row g-0">
+                                    <div className="col-md-3 mt-1"><i class="fas fa-shield-virus iconCard"></i></div>
+                                    <div className="col-md-9">
+                                        Nombre del Proyecto
+                                    </div>                                    
+                                </div>
+                                <div class="card-body">                                   
+                                    <h5 class="card-title">Autor</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>    
+                        <div className="col-md-4">
+                            <div class="card text-dark mb-3">
+                                <div class="card-header headColor row g-0">
+                                    <div className="col-md-3 mt-1"><i class="fas fa-shield-virus iconCard"></i></div>
+                                    <div className="col-md-9">
+                                        Nombre del Proyecto
+                                    </div>                                    
+                                </div>
+                                <div class="card-body">                                   
+                                    <h5 class="card-title">Autor</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">Last updated 3 mins ago</small>
+                                </div>
+                            </div>
+                        </div>                               
+                    </div>                       
+                </form>    
+                
             </div> <br />            
         </div>
     )

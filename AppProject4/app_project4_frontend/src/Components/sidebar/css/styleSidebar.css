@@ -13,6 +13,7 @@
     position: sticky;
     margin-right: 20px;
     float: left;
+    z-index: 100;
 }
 .sidebar .logoContent .logo {
     color: rgb(223, 153, 153);
