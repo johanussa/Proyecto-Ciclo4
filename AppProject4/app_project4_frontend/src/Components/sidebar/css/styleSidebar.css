@@ -2,17 +2,16 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
     width: 65px;
+    min-height: 100vh;
     background: #11101d;
     padding: 70px 15px 10px 2px;
     transition: all 0.5s ease;
 }
-.sidebar.active { width: 240px; }
+.sidebar.active { width: 240px;  }
 .body {
-    position: relative;
-    min-height: 100vh;
-    margin-right: 10px;
+    position: sticky;
+    margin-right: 20px;
     float: left;
 }
 .sidebar .logoContent .logo {

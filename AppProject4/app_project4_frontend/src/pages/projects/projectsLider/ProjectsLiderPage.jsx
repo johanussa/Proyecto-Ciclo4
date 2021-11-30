@@ -1,90 +1,48 @@
 import React from 'react';
 import './css/styleProjectPage.css';
+import IconProject from '../../../components/images/iconProyects.png';
 
 export default function ProjectsPage() {
-    const roll = "Estudiante";
     return (
-        <div>
-            <h1>Esta es la Pagina de Proyectos que verá un Líder</h1>
+        <div className="bodyLider"> 
             <div className="container">
-                <div className="card-group">
-                    <div className="card m-1">
-                        <i className="fas fa-laptop-house"></i>
-                        <div className="card-body">
-                            <h5 className="card-title">Nombre del Proyecto</h5>
-                            <p className="card-text">Descripcion del proyecto</p>
-                        </div>
-                        <div className="card-footer">
-                            <button type="button" className="btn btn-danger btn-sm" data-bs-toggle="modal" 
-                                data-bs-target="#modalInscripcion">
-                                Inscribirse
-                            </button>
-                        </div>
+                <img id="iconProject" src={ IconProject } alt="Project" />
+                <h2 id="titleLogo">Modulo de Gestion de Proyectos</h2>
+                <hr className="hrProject" />
+            </div>
+            <div id="containMain" className="container border mt-5">
+                <form className="row g-3 m-4 mt-2">
+                    <legend>Registrar un Nuevo Proyecto</legend>
+                    <div className="col-md-6">
+                        <label htmlFor="inputNomP" className="form-label">Nombre del Proyecto</label>
+                        <input type="text" className="form-control" id="inputNomP" 
+                            placeholder="Digite el nombre que le dara al proyecto" />
                     </div>
-                    <div className="card m-1">
-                        <i className="fas fa-address-card"></i>
-                        <div className="card-body">
-                            <h5 className="card-title">Nombre del Proyecto</h5>
-                            <p className="card-text">Descripcion del proyecto</p>
-                        </div>
-                        <div className="card-footer">
-                        { roll === "Lider" ? 
-                            <button type="button" className="btn btn-danger btn-sm" data-bs-toggle="modal" 
-                                data-bs-target="#modalInscripcion">
-                                Mostrar avances
-                            </button> : 
-                            <button type="button" className="btn btn-secondary btn-sm" data-bs-toggle="modal" 
-                                data-bs-target="#modalInscripcion">
-                                Inscribirse
-                            </button>                        
-                        }                             
-                        </div>
+                    <div className="col-md-6">
+                        <label htmlFor="inputID" className="form-label">Presupuesto Proyecto</label>
+                        <input type="number" className="form-control" id="inputID" 
+                            placeholder="Digite el presupuesto que tendra el proyecto" />
                     </div>
-                    <div className="card m-1">
-                        <i className="fas fa-chart-line"></i>
-                        <div className="card-body">
-                            <h5 className="card-title">Nombre del Proyecto</h5>
-                            <p className="card-text">Descripcion del Proyecto</p>
-                        </div>
-                        <div className="card-footer">
-                            <button type="button" className="btn btn-danger btn-sm" data-bs-toggle="modal" 
-                                data-bs-target="#modalInscripcion">
-                                Inscribirse
-                            </button>
-                        </div>
-                    </div>                           
-                </div>
-                <div className="modal fade" id="modalInscripcion" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            <form action="">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Realizar Inscripcion al Proyecto</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="input-group flex-nowrap mb-1">
-                                        <span className="input-group-text" id="addon-wrapping">Identificador</span>
-                                        <input type="text" className="form-control form-control-sm" placeholder="Digite su # de Identificacion" required />
-                                    </div>
-                                    <div className="input-group flex-nowrap mb-1">
-                                        <span className="input-group-text" id="addon-wrapping">Nombre</span>
-                                        <input type="text" className="form-control form-control-sm" placeholder="Digite Su nombre Completo" required />
-                                    </div>
-                                    <div className="input-group flex-nowrap mb-1">
-                                        <span className="input-group-text" id="addon-wrapping">Email</span>
-                                        <input type="email" className="form-control form-control-sm" placeholder="Digite su Correo Electronico" required />
-                                    </div>                                      
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="button" className="btn btn-primary">Registrame !!</button>
-                                </div>                  
-                            </form>                                          
-                        </div>
+                    <div className="col-md-12">
+                        <label htmlFor="floatingTextarea" className="form-label">Objetivos Generales</label>
+                        <textarea className="form-control" placeholder="Introduce aqui los objetivos generales del Proyecto, puedes enlistarlos." id="floatingTextarea"></textarea>
                     </div>
-                </div>
-            </div>            
+                    <div className="col-md-12">
+                        <label className="form-label">Objetivos Especificos</label>
+                        <textarea className="form-control" placeholder="Introduce aqui los objetivos especificos del Proyecto, puedes enlistarlos." id="floatingTextarea"></textarea>
+                    </div>
+                    <div className="col-md-6">
+                        <label htmlFor="inputNomP" className="form-label">Numero Identificador Lider</label>
+                        <input type="text" className="form-control" id="inputNomP" 
+                            placeholder="Identificacion del lider del proyecto" />
+                    </div>
+                    <div className="col-md-6">
+                        <label htmlFor="inputID" className="form-label">Nombre Lider de Proyecto</label>
+                        <input type="number" className="form-control" id="inputID" 
+                            placeholder="Nombre del Lider del proyecto" />
+                    </div>
+                </form> <br />              
+            </div>     <br /><br /><br />  
         </div>
     )
 }

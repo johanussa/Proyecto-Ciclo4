@@ -1,23 +1,26 @@
-.fa-address-card {
-    font-size: 100px;
-    text-align: center;
-    padding-top: 10px;
-    color: cadetblue;
+.bodyLider { background-color: azure; }
+#iconProject {
+    width: 80px;
+    margin: 30px;
+    margin-left: 14%;
+    float: left;
 }
-.fa-chart-line {
-    font-size: 100px;
-    text-align: center;
-    padding-top: 10px;
-    color: brown;
+#titleLogo {
+    padding-top: 45px;
+    text-shadow: 2px 2px 2px rgb(16, 102, 168);
+    font-family: serif;
 }
-.container {
-    margin-right: 10px;
+.hrProject {
+    color: rgb(37, 120, 150);
 }
-.card-footer {
-    border: solid 1px rgb(228, 228, 228);
-    background-color: rgb(246, 250, 253);
-    text-align: center;
+legend {
+    font-family: serif;
+    font-size: 30px;
+    margin-left: 25px;
 }
-.input-group-text {
-    width: 114px;
+#floatingTextarea {
+    min-height: 100px;
+}
+#containMain {
+    margin-right: 65px;
 }

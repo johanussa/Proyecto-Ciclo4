@@ -1,6 +1,6 @@
 import React from "react";
 import LoginPage from "./pages/login/LoginPage";
-import SideBar from "./Components/sidebar/SideBar";
+import SideBar from "./components/sidebar/SideBar";
 import UsersPage from "./pages/users/UsersPage";
 import MyProjects from "./pages/projects/myProjects/MyProjects";
 import ProjectsAdmin from "./pages/projects/projectsAdmin/ProjectsAdmin";
