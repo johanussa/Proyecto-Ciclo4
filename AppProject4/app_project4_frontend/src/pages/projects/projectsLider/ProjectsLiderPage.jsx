@@ -3,6 +3,7 @@ import './css/styleProjectPage.css';
 import IconProject from '../../../components/images/iconProyects.png';
 
 export default function ProjectsPage() {
+    const icons = [<i className="fas fa-external-link-alt"></i>];
     return (
         <div className="bodyLider"> 
             <div className="container">
@@ -12,7 +13,9 @@ export default function ProjectsPage() {
             </div>
             <div id="containMain" className="container border mt-5">
                 <form className="row g-3 m-4 mt-2">
-                    <legend>Registrar un Nuevo Proyecto</legend>
+                    <div>                        
+                        <legend>{ icons[0] } Registrar un Nuevo Proyecto</legend>  
+                    </div>                                      
                     <div className="col-md-6">
                         <label htmlFor="inputNomP" className="form-label">Nombre del Proyecto</label>
                         <input type="text" className="form-control" id="inputNomP" 
@@ -25,11 +28,13 @@ export default function ProjectsPage() {
                     </div>
                     <div className="col-md-12">
                         <label htmlFor="floatingTextarea" className="form-label">Objetivos Generales</label>
-                        <textarea className="form-control" placeholder="Introduce aqui los objetivos generales del Proyecto, puedes enlistarlos." id="floatingTextarea"></textarea>
+                        <textarea className="form-control" placeholder="Introduce aqui los objetivos generales del Proyecto, 
+                            puedes enlistarlos." id="floatingTextarea"></textarea>
                     </div>
                     <div className="col-md-12">
                         <label className="form-label">Objetivos Especificos</label>
-                        <textarea className="form-control" placeholder="Introduce aqui los objetivos especificos del Proyecto, puedes enlistarlos." id="floatingTextarea"></textarea>
+                        <textarea className="form-control" placeholder="Introduce aqui los objetivos especificos del Proyecto, 
+                            puedes enlistarlos." id="floatingTextarea"></textarea>
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="inputNomP" className="form-label">Numero Identificador Lider</label>
@@ -41,8 +46,17 @@ export default function ProjectsPage() {
                         <input type="number" className="form-control" id="inputID" 
                             placeholder="Nombre del Lider del proyecto" />
                     </div>
-                </form> <br />              
-            </div>     <br /><br /><br />  
+                    <div className="setDivProject col-md-6 mt-5">
+                        <button className="btn btn-secondary setBtnProject" type="reset" >Limpiar Campos</button>                        
+                    </div>   
+                    <div id="div2Project" className="setDivProject col-md-6 mt-5">
+                        <button className="btn btn-primary setBtnProject" type="button" >
+                            Registrar Proyecto !!
+                        </button>                         
+                    </div> 
+                    <legend>{ icons[0] } Proyectos Registrados</legend> 
+                </form>                           
+            </div> <br />            
         </div>
     )
 }

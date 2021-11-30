@@ -17,10 +17,27 @@ legend {
     font-family: serif;
     font-size: 30px;
     margin-left: 25px;
+    float: left;
 }
 #floatingTextarea {
     min-height: 100px;
 }
 #containMain {
     margin-right: 65px;
+}
+.setDivProject {
+    max-width: 100%;
+    margin: 25px auto;
+    text-align: right;
+}
+.setBtnProject {
+    width: 50%;
+}
+#div2Project {
+    text-align: left;
+}
+.fa-external-link-alt {
+    font-size: 22px;
+    color: #10171d;
+    padding-right: 10px;
 }
