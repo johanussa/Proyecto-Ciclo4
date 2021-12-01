@@ -41,3 +41,17 @@ legend {
     margin: auto;
     text-align: center;  
 }
+.btnCard { text-align: center; }
+.btnCardColor { background-color: rgb(45, 82, 122); min-width: 230px; }
+.btn2 { min-width: 230px; }
+#btnAdd { 
+    border: none; 
+    width: 60px;
+    align-items: center;
+}
+#iconAdd {
+    width: 26px;
+}
+.btnAvance {
+    border: none;
+}
