@@ -89,22 +89,22 @@ export default function ProjectsPage() {
                     </div>                                           
                 </form>   
                 
-                <div class="modal fade" id="modalEditProjectLider" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header headColor">
-                                <h5 class="modal-title" id="exampleModalLabel">Ver Detalles del Proyecto y Actualizar</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal fade" id="modalEditProjectLider" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header headColor">
+                                <h5 className="modal-title" id="exampleModalLabel">Ver Detalles del Proyecto y Actualizar</h5>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body m-3 mt-1">
+                            <div className="modal-body m-3 mt-1">
                                 <form className="row g-3">
-                                    <div class="col-md-6">
-                                        <label for="inputID" class="form-label-sm">ID del Proyecto</label>
-                                        <input readOnly type="text" class="form-control form-control-sm" id="inputID" />
+                                    <div className="col-md-6">
+                                        <label for="inputID" className="form-label-sm">ID del Proyecto</label>
+                                        <input readOnly type="text" className="form-control form-control-sm" id="inputID" />
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="inputName" class="form-label-sm">Nombre del Proyecto</label>
-                                        <input type="text" class="form-control form-control-sm" id="inputName" />
+                                    <div className="col-md-6">
+                                        <label for="inputName" className="form-label-sm">Nombre del Proyecto</label>
+                                        <input type="text" className="form-control form-control-sm" id="inputName" />
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label-sm">Objetivos Generales</label>
@@ -114,39 +114,39 @@ export default function ProjectsPage() {
                                         <label className="form-label-sm">Objetivos Especificos</label>
                                         <textarea className="form-control form-control-sm" placeholder="Objetivos Especificos" ></textarea>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="inputPresu" class="form-label-sm">Presupuesto</label>
-                                        <input type="number" class="form-control form-control-sm" id="inputPresu" />
+                                    <div className="col-md-4">
+                                        <label for="inputPresu" className="form-label-sm">Presupuesto</label>
+                                        <input type="number" className="form-control form-control-sm" id="inputPresu" />
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="inputDate" class="form-label-sm">Fecha de Inicio</label>
-                                        <input readOnly type="text" class="form-control form-control-sm" id="inputDate" />
+                                    <div className="col-md-4">
+                                        <label for="inputDate" className="form-label-sm">Fecha de Inicio</label>
+                                        <input readOnly type="text" className="form-control form-control-sm" id="inputDate" />
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="inputDate2" class="form-label-sm">Fecha de Terminacion</label>
-                                        <input readOnly type="text" class="form-control form-control-sm" id="inputDate2" />
+                                    <div className="col-md-4">
+                                        <label for="inputDate2" className="form-label-sm">Fecha de Terminacion</label>
+                                        <input readOnly type="text" className="form-control form-control-sm" id="inputDate2" />
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" className="btn btn-primary">Guardar Cambios</button>
                             </div>
                         </div>
                     </div>
                 </div>  
-                <div class="modal fade" id="modalAvance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header headColor">
-                                <h5 class="modal-title" id="exampleModalLabel">
+                <div className="modal fade" id="modalAvance" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-xl">
+                        <div className="modal-content">
+                            <div className="modal-header headColor">
+                                <h5 className="modal-title" id="exampleModalLabel">
                                     Avances e Inscripciones al Proyecto actual
                                 </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body m-3 mt-0">
+                            <div className="modal-body m-3 mt-0">
                                 <legend>Avances del Proyecto</legend>
-                                <table class="table table-striped table-hover table-sm">
+                                <table className="table table-striped table-hover table-sm">
                                     <thead>
                                         <tr className="table-primary">
                                             <th>Nombre Creador</th>
@@ -161,7 +161,7 @@ export default function ProjectsPage() {
                                             <td>Johan Ussa</td>
                                             <td>30/11/2021</td>
                                             <td>Se realiza el avance numero 1 y se corrigieron algunos errores</td>
-                                            <td><input type="text" class="form-control form-control-sm" placeholder="No hay Observaciones aun"/></td>
+                                            <td><input type="text" className="form-control form-control-sm" placeholder="No hay Observaciones aun"/></td>
                                             <td>
                                                 <button id="btnAdd">
                                                     <img id="iconAdd" src={ IconAdd } alt="Add Commit" title="Agregar Observacion"/>
@@ -171,7 +171,7 @@ export default function ProjectsPage() {
                                     </tbody>
                                 </table>
                                 <legend>Estudiantes Inscritos</legend>
-                                <table class="table table-striped table-hover table-sm">
+                                <table className="table table-striped table-hover table-sm">
                                     <thead>
                                         <tr className="table-primary">
                                             <th>Id Estudiante</th>
@@ -199,8 +199,8 @@ export default function ProjectsPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
                     </div>
