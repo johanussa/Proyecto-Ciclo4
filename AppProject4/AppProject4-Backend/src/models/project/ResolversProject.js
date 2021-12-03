@@ -2,14 +2,14 @@ import ProjectModel from "./ModelProyect";
 
 const resolversProject = {
     Query: {
-        allProyectos: async (parent, args) => {
-            const projects = await ProjectModel.find();
+        allProjects: async (parent, args) => {
+            const projects = await ProjectModel.find().populate('Lider');;
             if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
             else { return projects; } 
         }, 
         getOneProject: async (parent, args) => {
             const query = { _id: args._id };
-            const project = await ProjectModel.findById(query);
+            const project = await ProjectModel.findById(query).populate('Lider');
             if (project) { return project; } 
             else { console.log("El ID " + args._id + " No Existe en DB"); }
         },
@@ -33,11 +33,19 @@ const resolversProject = {
         updateProject: async (parent, args) => {
             try {
                 const query = { _id: args._id }; 
-                const project = await ProjectModel.findOne(query);
-                if (project) {
-                    const projectUpdate = await ProjectModel.updateOne(query, args);
+                if (args.Avance) {
+                    const projectUpdate = await ProjectModel.updateOne(query, { $push: { Avance: args.Avance } });
                     if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
-                }
+                } else if (args.Est_Inscritos) {
+                    const projectUpdate = await ProjectModel.updateOne(query, { $addToSet: { Est_Inscritos: args.Est_Inscritos } });
+                    if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
+                } else {
+                    const project = await ProjectModel.findOne(query);
+                    if (project) {
+                        const projectUpdate = await ProjectModel.updateOne(query, args);
+                        if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
+                    }
+                }                
             } catch (e) { return `El ID ${ args._id } No se encuentra Registrado`; }            
         },        
     },

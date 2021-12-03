@@ -5,7 +5,7 @@ const typeProject = gql `
     enum Estado_Proj { ACTIVO INACTIVO }
     enum Fase_Proj { INICIADO EN_DESARROLLO TERMINADO NULO }
 
-    type Avance {
+    type Advance {
         CreadoPor: String
         Fecha_Inicio: Date
         Descripcion: String
@@ -17,19 +17,19 @@ const typeProject = gql `
         Email: String
         Estado_Estud: String
     }
-    input crearAvance {
+    input addAdvance {
         CreadoPor: String
         Fecha_Inicio: Date
         Descripcion: String
         Observaciones: String
     }
-    input crearStudent {
+    input addStudent {
         Id_Estud: String
         Nom_Estud: String
         Email: String
         Estado_Estud: String
     }
-    type Proyecto {
+    type Project {
         _id: ID!
         Nombre: String!
         Ob_Generales: String!
@@ -37,16 +37,15 @@ const typeProject = gql `
         Presupuesto: Float!
         Fecha_Inicio: Date
         Fecha_Terminacion: Date
-        Id_Lider: String!
-        Avance: [Avance]
-        Nom_Lider: String
+        Lider: User!        
         Estado: Estado_Proj
         Fase: Fase_Proj  
-        Est_Inscritos: [Student]      
+        Est_Inscritos: [Student]  
+        Avance: [Advance]    
     }
     type Query {
-        allProyectos: [Proyecto] 
-        getOneProject( _id: ID! ) : Proyecto
+        allProjects: [Project] 
+        getOneProject( _id: ID! ) : Project
     }
     type Mutation {
         addProject(
@@ -56,17 +55,14 @@ const typeProject = gql `
             Presupuesto: Float!
             Fecha_Inicio: Date
             Fecha_Terminacion: Date
-            Id_Lider: String!
-            Avance: [crearAvance]
-            Nom_Lider: String
+            Lider: String!            
             Estado: Estado_Proj
             Fase: Fase_Proj  
-            Est_Inscritos: [crearStudent]  
-        ) : Proyecto
+            Est_Inscritos: [addStudent]  
+            Avance: [addAdvance]
+        ) : Project
 
-        deleteProject(
-            _id: ID!
-        ) : String
+        deleteProject( _id: ID! ) : String
 
         updateProject(
             _id: ID!
@@ -76,12 +72,11 @@ const typeProject = gql `
             Presupuesto: Float
             Fecha_Inicio: Date
             Fecha_Terminacion: Date
-            Id_Lider: String
-            Nom_Lider: String
-            Avance: [crearAvance]
+            Lider: String            
             Estado: Estado_Proj
             Fase: Fase_Proj  
-            Est_Inscritos: [crearStudent]  
+            Est_Inscritos: [addStudent]  
+            Avance: [addAdvance]
         ) : String
     }
 `;

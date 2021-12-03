@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ModelUser from '../users/ModelUser';
 const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema ( {
@@ -9,25 +10,21 @@ const ProjectSchema = new Schema ( {
     Presupuesto: { type: Number, required: true },
     Fecha_Inicio: { type: Date, required: true, default: new Date() },
     Fecha_Terminacion: { type: Date, required: false, defautl: "Null" },
-    Id_Lider: { type: String, required: true },
-    Nom_Lider: { type: String, required: true },
-    Avance: [{
-        CreadoPor: { type: String, required: true },
-        Fecha_Inicio: { type: Date, required: true, default: new Date() },
-        Descripcion: { type: String, required: true },
-        Observaciones: { type: String, requered: true, default: "Null" }
-    }],
-    Estado: { type: String, enum: [ "ACTIVO", "INACTIVO" ], 
-        required: true, default: "INACTIVO" },
-    Fase: { type: String, 
-        enum: [ "INICIADO", "EN_DESARROLLO", "TERMINADO", "NULO" ],
-        required: true, default: "NULO" },  
+    Lider: { type: Schema.Types.ObjectId, required: true, ref: ModelUser },     
+    Estado: { type: String, enum: [ "ACTIVO", "INACTIVO" ], default: "INACTIVO" },
+    Fase: { type: String, enum: [ "INICIADO", "EN_DESARROLLO", "TERMINADO", "NULO" ], default: "NULO" },  
     Est_Inscritos: [{
         _id: false,
         Id_Estud: { type: String, required: true, unique: true },
         Nom_Estud: { type: String, required: true },
         Email: { type: String, required: true, unique: true },
         Estado_Estud: { type: String, required: true, default: "PENDIENTE" }
+    }],
+    Avance: [{
+        CreadoPor: { type: String, required: true },
+        Fecha_Inicio: { type: Date, required: true, default: new Date() },
+        Descripcion: { type: String, required: true },
+        Observaciones: { type: String, requered: true, default: "Null" }
     }]  
 });
 
