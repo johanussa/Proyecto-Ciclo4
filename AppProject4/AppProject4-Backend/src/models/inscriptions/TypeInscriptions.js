@@ -13,7 +13,7 @@ const typeInscription = gql `
         Fecha_Egreso:Date
     }
     type Query {
-        allInscriptions: [Inscription]
+        allInscriptions( Estado: StateInscription ): [Inscription]
         getOneInscription( _id: ID! ) : Inscription
     }
     type Mutation {

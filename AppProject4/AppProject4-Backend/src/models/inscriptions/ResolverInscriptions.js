@@ -3,10 +3,17 @@ import InscriptionModel from './ModelInscriptions';
 const resolverInscription = {
     Query: {
         allInscriptions: async (parent, args) => {
-            const inscriptions = await InscriptionModel.find()
+            if (args.Estado) {
+                const inscriptions = await InscriptionModel.find({ Estado: args.Estado })
+                    .populate('Proyecto').populate('Estudiante');
+                if (inscriptions.length == 0) { console.log("No hay Estudiantes con ese Estado"); }
+                else { return inscriptions; } 
+            } else {
+                const inscriptions = await InscriptionModel.find()
                 .populate('Proyecto').populate('Estudiante');
-            if (inscriptions.length == 0) { console.log("No hay Registros en la base de datos"); }
-            else { return inscriptions; } 
+                if (inscriptions.length == 0) { console.log("No hay Registros en la base de datos"); }
+                else { return inscriptions; } 
+            }               
         },
         getOneInscription: async (parent, args) => {
             const query = { _id: args._id };

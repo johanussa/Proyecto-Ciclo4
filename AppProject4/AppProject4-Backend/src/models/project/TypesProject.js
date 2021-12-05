@@ -18,7 +18,7 @@ const typeProject = gql `
         Fase: Fase_Proj      
     }
     type Query {
-        allProjects: [Project] 
+        allProjects( _id: ID ): [Project] 
         getOneProject( _id: ID! ) : Project
     }
     type Mutation {

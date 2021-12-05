@@ -3,9 +3,15 @@ import ProjectModel from "./ModelProject";
 const resolversProject = {
     Query: {
         allProjects: async (parent, args) => {
-            const projects = await ProjectModel.find().populate('Lider');
-            if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
-            else { return projects; } 
+            if (args._id) {
+                const projects = await ProjectModel.find({ Lider: args._id }).populate('Lider');
+                if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
+                else { return projects; } 
+            } else {
+                const projects = await ProjectModel.find().populate('Lider');
+                if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
+                else { return projects; } 
+            }            
         }, 
         getOneProject: async (parent, args) => {
             const query = { _id: args._id };

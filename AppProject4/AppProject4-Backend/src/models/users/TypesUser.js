@@ -16,7 +16,7 @@ const typeUser = gql `
         Estado: Enum_Estado
     }
     type Query {
-        allUsers: [User]
+        allUsers( Rol: Enum_Rol ): [User]
         getOneUser( Identificacion: String! ) : User
     }
     type Mutation {
