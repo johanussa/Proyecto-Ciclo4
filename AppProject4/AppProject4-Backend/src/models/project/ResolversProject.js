@@ -1,9 +1,9 @@
-import ProjectModel from "./ModelProyect";
+import ProjectModel from "./ModelProject";
 
 const resolversProject = {
     Query: {
         allProjects: async (parent, args) => {
-            const projects = await ProjectModel.find().populate('Lider');;
+            const projects = await ProjectModel.find().populate('Lider');
             if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
             else { return projects; } 
         }, 
@@ -16,7 +16,6 @@ const resolversProject = {
     }, 
     Mutation: {
         addProject: async (parent, args) => {
-            console.log(args);
             const query = { Nombre: args.Nombre };
             const projectDB = await ProjectModel.find(query);    
             if (projectDB.length == 0) {                    
@@ -32,20 +31,12 @@ const resolversProject = {
         },
         updateProject: async (parent, args) => {
             try {
-                const query = { _id: args._id }; 
-                if (args.Avance) {
-                    const projectUpdate = await ProjectModel.updateOne(query, { $push: { Avance: args.Avance } });
+                const query = { _id: args._id };                 
+                const project = await ProjectModel.findOne(query);
+                if (project) {
+                    const projectUpdate = await ProjectModel.updateOne(query, args);
                     if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
-                } else if (args.Est_Inscritos) {
-                    const projectUpdate = await ProjectModel.updateOne(query, { $addToSet: { Est_Inscritos: args.Est_Inscritos } });
-                    if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
-                } else {
-                    const project = await ProjectModel.findOne(query);
-                    if (project) {
-                        const projectUpdate = await ProjectModel.updateOne(query, args);
-                        if (projectUpdate) { return `Proyecto ID ${args._id} Ha sido actualizado`; }
-                    }
-                }                
+                }                               
             } catch (e) { return `El ID ${ args._id } No se encuentra Registrado`; }            
         },        
     },
