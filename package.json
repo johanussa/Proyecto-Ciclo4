@@ -1,0 +1,35 @@
+{
+  "name": "alpha-team-backend",
+  "version": "1.0.0",
+  "description": "Proyecto Ciclo 4 App_Project AlphaTeam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node index.js --exec babel-node",
+    "dev": "nodemon index.js --exec babel-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rosshy/Backend-Proyecto-Ciclo-4.git"
+  },
+  "author": "Johan Ussa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rosshy/Backend-Proyecto-Ciclo-4/issues"
+  },
+  "homepage": "https://github.com/rosshy/Backend-Proyecto-Ciclo-4#readme",
+  "dependencies": {
+    "apollo-server-express": "^3.5.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^16.0.1",
+    "graphql-tools": "^8.2.0",
+    "mongoose": "^6.0.12",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}
