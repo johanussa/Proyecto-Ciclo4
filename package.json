@@ -1,7 +1,7 @@
 {
-  "name": "alpha-team-backend",
+  "name": "proyecto4",
   "version": "1.0.0",
-  "description": "Proyecto Ciclo 4 App_Project AlphaTeam",
+  "description": "Proyecto Ciclo 4 App_Project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rosshy/Backend-Proyecto-Ciclo-4.git"
+    "url": "git+https://github.com/johanussa/Proyecto-Ciclo4.git"
   },
   "author": "Johan Ussa",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rosshy/Backend-Proyecto-Ciclo-4/issues"
+    "url": "https://github.com/johanussa/Proyecto-Ciclo4/issues"
   },
-  "homepage": "https://github.com/rosshy/Backend-Proyecto-Ciclo-4#readme",
+  "homepage": "https://github.com/johanussa/Proyecto-Ciclo4#readme",
   "dependencies": {
     "apollo-server-express": "^3.5.0",
     "babel-cli": "^6.26.0",
