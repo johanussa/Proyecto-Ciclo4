@@ -8,8 +8,8 @@ const resolverAdvance = {
             else { return advances; } 
         },
         getOneAdvance: async (parent, args) => {
-            const query = { _id: args._id };
-            const advance = await ModelAdvance.findById(query)
+            const query = { Proyecto: args._id };
+            const advance = await ModelAdvance.find(query)
                 .populate('Proyecto').populate('Estudiante');
             if (advance) { return advance; } 
             else { console.log("El ID " + args._id + " No Existe en DB"); }
