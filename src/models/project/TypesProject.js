@@ -15,7 +15,9 @@ const typeProject = gql `
         Fecha_Terminacion: Date
         Lider: User!        
         Estado: Estado_Proj
-        Fase: Fase_Proj      
+        Fase: Fase_Proj  
+        Avances: [Advance]    
+        Inscripciones: [Inscription]
     }
     type Query {
         allProjects( _id: ID ): [Project] 

@@ -10,7 +10,7 @@ const typeInscription = gql `
         Estudiante: User!
         Estado: StateInscription
         Fecha_Ingreso: Date
-        Fecha_Egreso:Date
+        Fecha_Egreso: Date
     }
     type Query {
         allInscriptions( Estado: StateInscription ): [Inscription]

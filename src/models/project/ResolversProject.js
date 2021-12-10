@@ -4,11 +4,13 @@ const resolversProject = {
     Query: {
         allProjects: async (parent, args) => {
             if (args._id) {
-                const projects = await ProjectModel.find({ Lider: args._id }).populate('Lider');
+                const projects = await ProjectModel.find({ Lider: args._id })
+                    .populate('Lider').populate('Avances').populate('Inscripciones');
                 if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
                 else { return projects; } 
             } else {
-                const projects = await ProjectModel.find().populate('Lider');
+                const projects = await ProjectModel.find()
+                    .populate('Lider').populate('Avances').populate('Inscripciones');
                 if (projects.length == 0) { console.log("No hay Registros en la base de datos"); }
                 else { return projects; } 
             }            
