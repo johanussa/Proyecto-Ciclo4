@@ -204,8 +204,7 @@ export default function ProjectsPage() {
                             </div>
                         </div>
                     </div>
-                </div>               
-                
+                </div>                              
             </div> <br />            
         </div>
     )

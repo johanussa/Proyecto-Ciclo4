@@ -13,6 +13,21 @@ const ProjectSchema = new Schema ( {
     Lider: { type: Schema.Types.ObjectId, required: true, ref: ModelUser },     
     Estado: { type: String, enum: [ "ACTIVO", "INACTIVO" ], default: "INACTIVO" },
     Fase: { type: String, enum: [ "INICIADO", "EN_DESARROLLO", "TERMINADO", "NULO" ], default: "NULO" }     
+}, {
+    toJSON: { virtuals: true }, 
+    toObject: { virtuals: true }
+});
+
+ProjectSchema.virtual('Avances', {
+    ref: 'Avance',
+    localField: '_id',
+    foreignField: 'Proyecto'
+});
+
+ProjectSchema.virtual('Inscripciones', {
+    ref: 'Inscripcion',
+    localField: '_id',
+    foreignField: 'Proyecto'
 });
 
 const ProjectModel = mongoose.model('Proyecto', ProjectSchema);

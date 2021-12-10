@@ -8,4 +8,10 @@ const allTypes = gql`
     scalar Date
 `;
 
-export const typesDefs = [ allTypes, typeProject, typeUser, typeInscription, typeAdvance ];
+export const typesDefs = [ 
+    allTypes, 
+    typeProject, 
+    typeUser, 
+    typeInscription, 
+    typeAdvance 
+];
