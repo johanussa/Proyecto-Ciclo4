@@ -58,7 +58,7 @@ export default function SideBar() {
                 </li>
                 <li>
                     <Link to="/misProyectos" className="links">
-                        <i class="fas fa-code-branch"></i>
+                        <i className="fas fa-code-branch"></i>
                         <span className="linksName">Mis Proyectos</span>                        
                     </Link>
                     <span className="tooltip">Mis Proyectos</span>

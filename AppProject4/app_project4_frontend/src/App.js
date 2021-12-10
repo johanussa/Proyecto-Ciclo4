@@ -9,12 +9,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProjectsLiderPage from './pages/projects/projectsLider/ProjectsLiderPage';
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
-const httpLink = createHttpLink({
-  uri: "https://alphateam-backend.herokuapp.com/graphql"
-});
+// const httpLink = createHttpLink({
+//   uri: "https://alphateam-backend.herokuapp.com/graphql"
+// });
 
 const client = new ApolloClient({
-  uri: httpLink,
+  uri: "https://alphateam-backend.herokuapp.com/graphql",
   cache: new InMemoryCache()
 });
 
