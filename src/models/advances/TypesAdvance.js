@@ -11,7 +11,7 @@ const typeAdvance = gql `
     }
     type Query {
         allAdvances: [Advance]
-        getOneAdvance( _id: ID! ) : [Advance]
+        filterAdvance( _id: ID! ) : [Advance]
     }
     type Mutation {
         addAdvance(

@@ -7,10 +7,10 @@ const resolverAdvance = {
             if (advances.length == 0) { console.log("No hay Registros en la base de datos"); }
             else { return advances; } 
         },
-        getOneAdvance: async (parent, args) => {
+        filterAdvance: async (parent, args) => {
             const query = { Proyecto: args._id };
             const advance = await ModelAdvance.find(query)
-                .populate('Proyecto').populate('Estudiante');
+                .populate('Proyecto').populate('Estudiante'); 
             if (advance) { return advance; } 
             else { console.log("El ID " + args._id + " No Existe en DB"); }
         },
