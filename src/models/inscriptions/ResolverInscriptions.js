@@ -15,8 +15,8 @@ const resolverInscription = {
                 else { return inscriptions; } 
             }               
         },
-        getOneInscription: async (parent, args) => {
-            const query = { _id: args._id };
+        filterInscription: async (parent, args) => {
+            const query = { Proyecto: args._id };
             const inscription = await InscriptionModel.findById(query)
                 .populate('Proyecto').populate('Estudiante');
             if (inscription) { return inscription; } 
