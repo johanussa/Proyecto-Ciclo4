@@ -2,18 +2,18 @@ import { gql } from '@apollo/client';
 
 const New_Project = gql`
     mutation AddProject(
-        $nombre: String!, 
-        $obGenerales: String!, 
-        $obEspecificos: String!, 
-        $presupuesto: Float!, 
-        $lider: String!
+        $Nombre: String!, 
+        $Ob_Generales: String!, 
+        $Ob_Especificos: String!, 
+        $Presupuesto: Float!, 
+        $Lider: String!
     ) {
         addProject(
-            Nombre: $nombre, 
-            Ob_Generales: $obGenerales, 
-            Ob_Especificos: $obEspecificos, 
-            Presupuesto: $presupuesto, 
-            Lider: $lider
+            Nombre: $Nombre, 
+            Ob_Generales: $Ob_Generales, 
+            Ob_Especificos: $Ob_Especificos, 
+            Presupuesto: $Presupuesto, 
+            Lider: $Lider
     ) {
         _id
         Nombre

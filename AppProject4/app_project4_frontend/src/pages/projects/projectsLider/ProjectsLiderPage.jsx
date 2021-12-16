@@ -1,12 +1,13 @@
 import Swal from 'sweetalert2';
 import './css/styleProjectPage.css';
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import IconAdd from '../../../components/images/iconAdd.png';
 import IconAcept from '../../../components/images/iconAcept.png';
 import IconCancel from '../../../components/images/iconCancel.png';
 import IconProject from '../../../components/images/iconProyects.png';
 import { Get_ProjectsLider, Get_Advances, Get_Inscriptions } from '../../../graphQL/Projects/QueriesLider';
+import { New_Project } from '../../../graphQL/Projects/MutationLider';
 
 export default function ProjectsPage() {
 
@@ -16,9 +17,10 @@ export default function ProjectsPage() {
         <i className="fab fa-buffer iconArray" />
     ];
 
-    const { loading, error, data } = useQuery(Get_ProjectsLider);
+    const [getProjects, { loading, error, data }] = useLazyQuery(Get_ProjectsLider);
     const { loading : loadAdvance, error : errorAdvance, data : dataAdvance } = useQuery(Get_Advances);
     const [getInscriptions, { loading : loadInsc, data : dataInsc }] = useLazyQuery(Get_Inscriptions);
+    const [addProject, { data : dataProject, loading : loadProject, error : errorProject }] = useMutation(New_Project);
     
     const [idProject, setIdProject] = useState('');
     const [nameProject, setNameProject] = useState('');
@@ -28,32 +30,40 @@ export default function ProjectsPage() {
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');  
     const [idSearch, setIdSearch] = useState('');   
+    const [Nombre, setNombre] = useState('');   
+    const [Ob_Generales, setOb_Generales] = useState('');   
+    const [Ob_Especificos, setOb_Especificos] = useState('');   
+    const [Presupuesto, setPresupuesto] = useState(0);   
+    const [Lider, setLider] = useState('');   
 
-    useEffect(() => {      
-        if (error || errorAdvance) { 
+    useEffect(() => {  
+        getProjects();    
+        if (error || errorAdvance || errorProject) { 
             Swal.fire({
                 icon: 'error',
                 title: 'Lo Siento, Algo Salio Mal!!',
                 text: 'Error al consultar los datos de los proyectos',
             });  
         }                
-    }, [data, error, dataAdvance, errorAdvance, dataInsc]);    
+    }, [data, error, dataAdvance, errorAdvance, dataInsc, errorProject, dataProject, getProjects]);    
           
     function fecha(fecha) {
         const newFecha = fecha.split("T"); 
         return newFecha[0];
     }    
-    function update() {        
-        Swal.fire({
-            icon: 'success',
-            title: 'El Proyecto ha sido Actualizado con exito!!',
-            showConfirmButton: false,
-            timer: 2000
-        }); 
+    function update() {   
+        if (!errorProject) {
+            Swal.fire({
+                icon: 'success',
+                title: 'El Proyecto ha sido Creado con exito!!',
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        } getProjects(); 
     }
 
     if (loading || loadAdvance) { 
-        return <div className="container"><h5 className='container'>Loading Data ...</h5></div> } 
+        return <div className="container"><h5 className='container pt-5'>Loading Data ...</h5></div> } 
 
     return (
         <div className="bodyLider"> 
@@ -67,37 +77,35 @@ export default function ProjectsPage() {
                     <div> <legend>{ icons[0] } Registrar un Nuevo Proyecto</legend> </div>                                      
                     <div className="col-md-6">
                         <label htmlFor="inputNomP" className="form-label">Nombre del Proyecto</label>
-                        <input type="text" className="form-control" id="inputNomP" 
-                            placeholder="Digite el nombre que le dara al proyecto" />
+                        <input type="text" className="form-control" id="inputNomP" autoComplete="none"
+                            placeholder="Digite el nombre que le dara al proyecto" onChange={ e => { setNombre(e.target.value) } }/>
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="inputID" className="form-label">Presupuesto Proyecto</label>
-                        <input type="number" className="form-control" id="inputID" 
+                        <input type="number" className="form-control" id="inputID" onChange={ e => { setPresupuesto(parseInt(e.target.value)) } }
                             placeholder="Digite el presupuesto que tendra el proyecto" />
                     </div>
                     <div className="col-md-12">
                         <label htmlFor="floatingTextarea" className="form-label">Objetivos Generales</label>
                         <textarea className="form-control" placeholder="Introduce aqui los objetivos generales del Proyecto, 
-                            puedes enlistarlos." id="floatingTextarea"></textarea>
+                            puedes enlistarlos." id="floatingTextarea" onChange={ e => { setOb_Generales(e.target.value) } }></textarea>
                     </div>
                     <div className="col-md-12">
                         <label className="form-label">Objetivos Especificos</label>
                         <textarea className="form-control" placeholder="Introduce aqui los objetivos especificos del Proyecto, 
-                            puedes enlistarlos." id="floatingTextarea"></textarea>
+                            puedes enlistarlos." id="floatingTextarea" onChange={ e => { setOb_Especificos(e.target.value) } }></textarea>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                         <label htmlFor="inputNomP" className="form-label">Numero Identificador Lider</label>
-                        <input type="text" className="form-control" id="inputNomP" placeholder="Identificacion del lider del proyecto" />
-                    </div>
-                    <div className="col-md-6">
-                        <label htmlFor="inputID" className="form-label">Nombre Lider de Proyecto</label>
-                        <input type="text" className="form-control" id="inputID" placeholder="Nombre del Lider del proyecto" />
+                        <input type="text" className="form-control" id="inputNomP" onChange={ e => { setLider(e.target.value) } }
+                            placeholder="Numero de Identificacion del lider del proyecto que se esta creando" />
                     </div>
                     <div className="setDivProject col-md-6 mt-5">
                         <button className="btn btn-secondary setBtnProject" type="reset" >Limpiar Campos</button>                        
                     </div>   
                     <div id="div2Project" className="setDivProject col-md-6 mt-5">
-                        <button className="btn btn-primary setBtnProject btnColor" type="button" onClick={ update }>
+                        <button className="btn btn-primary setBtnProject btnColor" type="button" onClick={ () => {  
+                            addProject({ variables: { Nombre, Presupuesto, Ob_Generales, Ob_Especificos, Lider } }); update(); } }>
                             Registrar Proyecto !!
                         </button>                       
                     </div> 
