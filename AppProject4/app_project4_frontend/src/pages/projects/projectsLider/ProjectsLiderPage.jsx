@@ -1,13 +1,13 @@
 import Swal from 'sweetalert2';
 import './css/styleProjectPage.css';
-import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import IconAdd from '../../../components/images/iconAdd.png';
 import IconAcept from '../../../components/images/iconAcept.png';
 import IconCancel from '../../../components/images/iconCancel.png';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import IconProject from '../../../components/images/iconProyects.png';
 import { Get_ProjectsLider, Get_Advances, Get_Inscriptions } from '../../../graphQL/Projects/QueriesLider';
-import { New_Project } from '../../../graphQL/Projects/MutationLider';
+import { New_Project, Update_Project, Update_Advance, Update_Inscription } from '../../../graphQL/Projects/MutationLider';
 
 export default function ProjectsPage() {
 
@@ -18,44 +18,46 @@ export default function ProjectsPage() {
     ];
 
     const [getProjects, { loading, error, data }] = useLazyQuery(Get_ProjectsLider);
-    const { loading : loadAdvance, error : errorAdvance, data : dataAdvance } = useQuery(Get_Advances);
     const [getInscriptions, { loading : loadInsc, data : dataInsc }] = useLazyQuery(Get_Inscriptions);
     const [addProject, { data : dataProject, loading : loadProject, error : errorProject }] = useMutation(New_Project);
+    const [getAdvances, { loading : loadAdvance, error : errorAdvance, data : dataAdvance }] = useLazyQuery(Get_Advances);
+    const [updateProject, { data : dataUpProj, loading : loadUpProj, error : errorUpProj }] = useMutation(Update_Project);
+    const [updateAdvance, { data : dataUpAdva, loading : loadUpAdva, error : errorUpAdva }] = useMutation(Update_Advance);
+    const [updateInscription, { data : dataUpIns, loading : loadUpIns, error : errorUpIns }] = useMutation(Update_Inscription);
     
-    const [idProject, setIdProject] = useState('');
-    const [nameProject, setNameProject] = useState('');
-    const [objGener, setObjGener] = useState('');
-    const [objEspec, setObjEspec] = useState('');
-    const [presup, setPresup] = useState(0);
-    const [fechaInicio, setFechaInicio] = useState('');
+    const [Lider, setLider] = useState('');   
+    const [Nombre, setNombre] = useState('');   
     const [fechaFin, setFechaFin] = useState('');  
     const [idSearch, setIdSearch] = useState('');   
-    const [Nombre, setNombre] = useState('');   
-    const [Ob_Generales, setOb_Generales] = useState('');   
-    const [Ob_Especificos, setOb_Especificos] = useState('');   
+    const [idProject, setIdProject] = useState('');
     const [Presupuesto, setPresupuesto] = useState(0);   
-    const [Lider, setLider] = useState('');   
+    const [fechaInicio, setFechaInicio] = useState('');
+    const [Ob_Generales, setOb_Generales] = useState('');   
+    const [Observaciones, setObservaciones] = useState('');   
+    const [Ob_Especificos, setOb_Especificos] = useState('');   
 
     useEffect(() => {  
-        getProjects();    
-        if (error || errorAdvance || errorProject) { 
+        getProjects(); 
+        getAdvances();    
+        if (error || errorAdvance || errorProject || errorUpProj) { 
             Swal.fire({
                 icon: 'error',
                 title: 'Lo Siento, Algo Salio Mal!!',
                 text: 'Error al consultar los datos de los proyectos',
             });  
         }                
-    }, [data, error, dataAdvance, errorAdvance, dataInsc, errorProject, dataProject, getProjects]);    
+    }, [data, error, dataAdvance, errorAdvance, dataInsc, errorProject, 
+        dataProject, getProjects, getAdvances, errorUpProj]);    
           
     function fecha(fecha) {
         const newFecha = fecha.split("T"); 
         return newFecha[0];
     }    
-    function update() {   
-        if (!errorProject) {
+    function update(metodo) {   
+        if (!errorProject || !errorUpProj) {
             Swal.fire({
                 icon: 'success',
-                title: 'El Proyecto ha sido Creado con exito!!',
+                title: `El Proyecto ha sido ${ metodo } con exito!!`,
                 showConfirmButton: false,
                 timer: 2000
             }); 
@@ -99,19 +101,19 @@ export default function ProjectsPage() {
                         <label htmlFor="inputNomP" className="form-label">Numero Identificador Lider</label>
                         <input type="text" className="form-control" id="inputNomP" onChange={ e => { setLider(e.target.value) } }
                             placeholder="Numero de Identificacion del lider del proyecto que se esta creando" />
-                    </div>
+                    </div>   
                     <div className="setDivProject col-md-6 mt-5">
                         <button className="btn btn-secondary setBtnProject" type="reset" >Limpiar Campos</button>                        
                     </div>   
                     <div id="div2Project" className="setDivProject col-md-6 mt-5">
                         <button className="btn btn-primary setBtnProject btnColor" type="button" onClick={ () => {  
-                            addProject({ variables: { Nombre, Presupuesto, Ob_Generales, Ob_Especificos, Lider } }); update(); } }>
+                            addProject({ variables: { Nombre, Presupuesto, Ob_Generales, Ob_Especificos, Lider } }); update("Creado"); } }>
                             Registrar Proyecto !!
                         </button>                       
                     </div> 
                     <legend>{ icons[0] } Proyectos Registrados</legend> 
                     <div id="divCards" className="card-group row g-3">
-                    { data.allProjects.map( project =>                                                    
+                    { data && data.allProjects.map( project =>                                                    
                         <div className="col-md-4">
                             <div className="card text-dark mb-3">
                                 <div className="card-header headColor row g-0">
@@ -129,8 +131,8 @@ export default function ProjectsPage() {
                                     <section>
                                         <button type="button" className="btn btn-primary btn-sm btnCardColor" data-bs-toggle="modal" 
                                             data-bs-target="#modalEditProjectLider" onClick={ () => {
-                                                setIdProject(project._id); setNameProject(project.Nombre); setObjGener(project.Ob_Generales);
-                                                setObjEspec(project.Ob_Especificos); setPresup(project.Presupuesto); 
+                                                setIdProject(project._id); setNombre(project.Nombre); setOb_Generales(project.Ob_Generales);
+                                                setOb_Especificos(project.Ob_Especificos); setPresupuesto(project.Presupuesto); 
                                                 setFechaInicio(project.Fecha_Inicio); setFechaFin(project.Fecha_Terminacion);
                                             } }>
                                             Ver y/o Actualizar Proyecto
@@ -166,19 +168,23 @@ export default function ProjectsPage() {
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label-sm">Nombre del Proyecto</label>
-                                        <input type="text" className="form-control form-control-sm" placeholder={ nameProject } />
+                                        <input type="text" className="form-control form-control-sm" placeholder={ Nombre } 
+                                            onChange={ e => setNombre(e.target.value) }/>
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label-sm">Objetivos Generales</label>
-                                        <textarea className="form-control form-control-sm" placeholder={ objGener } />
+                                        <textarea className="form-control form-control-sm" placeholder={ Ob_Generales } 
+                                            onChange={ e => setOb_Generales(e.target.value) }/>
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label-sm">Objetivos Especificos</label>
-                                        <textarea className="form-control form-control-sm" placeholder={ objEspec } />                                        
+                                        <textarea className="form-control form-control-sm" placeholder={ Ob_Especificos } 
+                                            onChange={ e => setOb_Especificos(e.target.value) }/>                                        
                                     </div>
                                     <div className="col-md-4">
                                         <label className="form-label-sm">Presupuesto</label>
-                                        <input type="number" className="form-control form-control-sm" placeholder={ presup } />
+                                        <input type="number" className="form-control form-control-sm" placeholder={ Presupuesto } 
+                                            onChange={ e => setPresupuesto(e.target.value) }/>
                                     </div>
                                     <div className="col-md-4">
                                         <label className="form-label-sm">Fecha de Inicio</label>
@@ -192,7 +198,11 @@ export default function ProjectsPage() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary btnColor" onClick={ update }>Guardar Cambios</button>
+                                <button type="button" className="btn btn-primary btnColor" data-bs-dismiss="modal" 
+                                    onClick={ () => { updateProject({ variables: { id: idProject, Nombre, Ob_Generales, 
+                                        Ob_Especificos, Presupuesto } }); update("Actualizado"); }  }>
+                                    Guardar Cambios
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -204,7 +214,7 @@ export default function ProjectsPage() {
                                 <h5 className="modal-title" id="exampleModalLabel">
                                     Avances e Inscripciones al Proyecto actual
                                 </h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={ () => {  } } />
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                             </div>
                             <div className="modal-body m-3 mt-0">
                                 <legend className='divModalAdvances'>{ icons[1] }Avances del Proyecto</legend>
@@ -220,7 +230,7 @@ export default function ProjectsPage() {
                                         </tr>                                        
                                     </thead>
                                     <tbody>                                          
-                                        { dataAdvance.allAdvances.map(advance => { 
+                                        { dataAdvance && dataAdvance.allAdvances.map(advance => { 
                                             if (advance.Proyecto._id === idSearch) {
                                                 return (
                                                 <tr>
@@ -228,10 +238,11 @@ export default function ProjectsPage() {
                                                     <td>{ `${advance.Estudiante.Nombre} ${advance.Estudiante.Apellido}` }</td>
                                                     <td>{ fecha(advance.Fecha) }</td>
                                                     <td>{ advance.Descripcion }</td>
-                                                    <td><input type="text" className="form-control form-control-sm" 
-                                                        placeholder={ advance.Observaciones }/></td>
+                                                    <td><textarea type="text" className="form-control form-control-sm" onChange={ 
+                                                        e => setObservaciones(e.target.value) } placeholder={ advance.Observaciones }/></td>
                                                     <td>
-                                                        <button id="btnAdd">
+                                                        <button id="btnAdd" onClick={ () => { updateAdvance({ variables: { id: advance._id, 
+                                                                Observaciones } }); update("Actualizado"); getAdvances(); } }>
                                                             <img id="iconAdd" src={ IconAdd } alt="Add Commit" title="Agregar Observacion"/>
                                                         </button>
                                                     </td>
@@ -254,8 +265,7 @@ export default function ProjectsPage() {
                                         </tr>                                        
                                     </thead>
                                     <tbody>
-                                        { dataInsc && dataInsc.filterInscription.map(insc => {                                                
-                                            console.log(dataInsc.filterInscription.length);
+                                        { dataInsc && dataInsc.filterInscription.map(insc => {      
                                             return (
                                                 <tr>
                                                     <th>{ insc.Estudiante.Identificacion }</th>
@@ -264,11 +274,16 @@ export default function ProjectsPage() {
                                                     <td>{ insc.Fecha_Egreso }</td>
                                                     <td>{ insc.Estado }</td>
                                                     <td>
-                                                        <button className="btnAvance">
-                                                            <img id="iconAdd" src={ IconAcept } alt="Add Student" title="Agregar Estudiante"/>
+                                                        <button className="btnAvance" onClick={ () => { 
+                                                            updateInscription({ variables: {
+                                                            id: insc._id, Estado: "ACEPTADO" } }); update("Actualizado"); getInscriptions({
+                                                                variables: { id: idSearch } }); } }>
+                                                            <img id="iconAdd" src={ IconAcept } alt="Add Student" title="Aceptar Solicitud"/>
                                                         </button>
-                                                        <button className="btnAvance">
-                                                            <img id="iconAdd" src={ IconCancel } alt="Delete Student" title="Eliminra Estudiante"/>
+                                                        <button className="btnAvance" onClick={ () => { updateInscription({ variables: {
+                                                            id: insc._id, Estado: "RECHAZADO" } }); update("Actualizado"); getInscriptions({
+                                                                variables: { id: idSearch } }); } }>
+                                                            <img id="iconAdd" src={ IconCancel } alt="Delete Student" title="Rechazar Solicitud"/>
                                                         </button>
                                                     </td>
                                                 </tr>   
@@ -278,7 +293,7 @@ export default function ProjectsPage() {
                                 </table>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={ () => {  } }>
+                                <button type="button" className="btn btn-secondary btnColor" data-bs-dismiss="modal" >
                                     Cancelar
                                 </button>
                             </div>

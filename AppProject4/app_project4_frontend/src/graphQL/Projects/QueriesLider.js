@@ -24,6 +24,7 @@ const Get_ProjectsLider = gql`
 const Get_Advances = gql`
     query AllAdvances {
         allAdvances {
+            _id
             Fecha
             Descripcion
             Observaciones
@@ -41,6 +42,7 @@ const Get_Advances = gql`
 const Get_Inscriptions = gql`
     query ($id: ID!) {
         filterInscription(_id: $id) {
+            _id
             Estudiante {
                 Identificacion
                 Nombre

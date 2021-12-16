@@ -14,37 +14,48 @@ const New_Project = gql`
             Ob_Especificos: $Ob_Especificos, 
             Presupuesto: $Presupuesto, 
             Lider: $Lider
-    ) {
+        ) {
         _id
         Nombre
-    }
+        }
     }
 `;
 const Update_Project = gql`
     mutation UpdateProject(
         $id: ID!, 
-        $nombre: String, 
-        $obGenerales: String, 
-        $obEspecificos: String, 
-        $presupuesto: Float
+        $Nombre: String!, 
+        $Ob_Generales: String!, 
+        $Ob_Especificos: String!, 
+        $Presupuesto: Float!, 
     ) {
         updateProject(
             _id: $id,
-            Nombre: $nombre,
-            Ob_Generales: $obGenerales,
-            Ob_Especificos: $obEspecificos,
-            Presupuesto: $presupuesto
+            Nombre: $Nombre,
+            Ob_Generales: $Ob_Generales,
+            Ob_Especificos: $Ob_Especificos,
+            Presupuesto: $Presupuesto
         )
     }
 `;
 const Update_Inscription = gql`
     mutation UpdateInscription(
         $id: ID!, 
-        $estado: StateInscription!
+        $Estado: StateInscription!
     ) {
         updateInscription(
             _id: $id, 
-            Estado: $estado
+            Estado: $Estado
+        )
+    }
+`;
+const Update_Advance = gql`
+    mutation UpdateAdvance(
+        $id: ID!, 
+        $Observaciones: String!
+    ) {
+        updateAdvance(
+            _id: $id, 
+            Observaciones: $Observaciones
         )
     }
 `;
@@ -64,4 +75,8 @@ const Add_Observation = gql`
     }
 `;
 
-export { New_Project, Update_Project, Update_Inscription, Add_Observation }
+export { 
+    New_Project, Update_Project, 
+    Update_Inscription, Add_Observation, 
+    Update_Advance 
+}
