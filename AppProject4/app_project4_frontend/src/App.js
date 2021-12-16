@@ -7,11 +7,7 @@ import ProjectsAdmin from "./pages/projects/projectsAdmin/ProjectsAdmin";
 import ProjectsEstud from "./pages/projects/projectsEstud/ProjectsEstud";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProjectsLiderPage from './pages/projects/projectsLider/ProjectsLiderPage';
-import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-
-// const httpLink = createHttpLink({
-//   uri: "https://alphateam-backend.herokuapp.com/graphql"
-// });
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
   uri: "https://alphateam-backend.herokuapp.com/graphql",

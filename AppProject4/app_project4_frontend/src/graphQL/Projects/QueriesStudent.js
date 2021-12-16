@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const Get_ProjectsLider = gql`
+const Get_ProjectsStudent = gql`
     query{
         allProjects {
             _id
@@ -14,24 +14,28 @@ const Get_ProjectsLider = gql`
             Fase
             Lider {
                 _id
-                Nombre
                 Identificacion
+                Nombre
                 Apellido
+            }       
+        }
+    }
+`;
+const Get_Advances = gql`
+    query AllAdvances {
+        allAdvances {
+            _id
+            Fecha
+            Descripcion
+            Observaciones
+            Proyecto {
+                _id
             }
-            Avances {
-                Fecha
-                Descripcion
-                Observaciones
-                Estudiante { _id }
-            }   
-            Inscripciones {
-                Estado
-                Fecha_Ingreso
-                Fecha_Egreso
-                Estudiante { _id }
-            }         
+            Estudiante {
+                _id
+            }
         }
     }
 `;
 
-export { Get_ProjectsLider }
+export { Get_ProjectsStudent, Get_Advances }

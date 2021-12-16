@@ -1,39 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 import './css/styleProjectPage.css';
-import IconProject from '../../../components/images/iconProyects.png';
+import { useQuery, useLazyQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
 import IconAdd from '../../../components/images/iconAdd.png';
-import IconCancel from '../../../components/images/iconCancel.png';
 import IconAcept from '../../../components/images/iconAcept.png';
-import { Get_ProjectsLider } from '../../../graphQL/ProjectLider/QueriesLider';
-import { useQuery } from '@apollo/client';
+import IconCancel from '../../../components/images/iconCancel.png';
+import IconProject from '../../../components/images/iconProyects.png';
+import { Get_ProjectsLider, Get_Advances, Get_Inscriptions } from '../../../graphQL/Projects/QueriesLider';
 
 export default function ProjectsPage() {
 
-    const icons = [<i className="fas fa-external-link-alt"></i>, <i className="fab fa-angular iconArray"></i>, 
-        <i className="fab fa-buffer iconArray"></i>];
+    const icons = [
+        <i className="fas fa-external-link-alt" />, 
+        <i className="fab fa-angular iconArray" />, 
+        <i className="fab fa-buffer iconArray" />
+    ];
+
     const { loading, error, data } = useQuery(Get_ProjectsLider);
+    const { loading : loadAdvance, error : errorAdvance, data : dataAdvance } = useQuery(Get_Advances);
+    const [getInscriptions, { loading : loadInsc, data : dataInsc }] = useLazyQuery(Get_Inscriptions);
+    
     const [idProject, setIdProject] = useState('');
     const [nameProject, setNameProject] = useState('');
     const [objGener, setObjGener] = useState('');
     const [objEspec, setObjEspec] = useState('');
     const [presup, setPresup] = useState(0);
     const [fechaInicio, setFechaInicio] = useState('');
-    const [fechaFin, setFechaFin] = useState('');
-    const [idStudent, setIdStudent] = useState('');
-    const [fechaAdvance, setFechaAdvance] = useState('');
-    const [descripAdva, setDescripAdva] = useState('');
-    const [obserAdva, setObserAdva] = useState('');
-    const [estadoIns, setEstadoIns] = useState('');
-    const [ingresoIns, setIngresoIns] = useState('');
-    const [egresoIns, setEgresoIns] = useState('');
-    const [idIns, setIdIns] = useState('');
+    const [fechaFin, setFechaFin] = useState('');  
+    const [idSearch, setIdSearch] = useState('');   
 
-    useEffect(() => { }, [data]);
-
+    useEffect(() => {      
+        if (error || errorAdvance) { 
+            Swal.fire({
+                icon: 'error',
+                title: 'Lo Siento, Algo Salio Mal!!',
+                text: 'Error al consultar los datos de los proyectos',
+            });  
+        }                
+    }, [data, error, dataAdvance, errorAdvance, dataInsc]);    
+          
     function fecha(fecha) {
         const newFecha = fecha.split("T"); 
         return newFecha[0];
+    }    
+    function update() {        
+        Swal.fire({
+            icon: 'success',
+            title: 'El Proyecto ha sido Actualizado con exito!!',
+            showConfirmButton: false,
+            timer: 2000
+        }); 
     }
+
+    if (loading || loadAdvance) { 
+        return <div className="container"><h5 className='container'>Loading Data ...</h5></div> } 
 
     return (
         <div className="bodyLider"> 
@@ -71,64 +91,56 @@ export default function ProjectsPage() {
                     </div>
                     <div className="col-md-6">
                         <label htmlFor="inputID" className="form-label">Nombre Lider de Proyecto</label>
-                        <input type="number" className="form-control" id="inputID" placeholder="Nombre del Lider del proyecto" />
+                        <input type="text" className="form-control" id="inputID" placeholder="Nombre del Lider del proyecto" />
                     </div>
                     <div className="setDivProject col-md-6 mt-5">
                         <button className="btn btn-secondary setBtnProject" type="reset" >Limpiar Campos</button>                        
                     </div>   
                     <div id="div2Project" className="setDivProject col-md-6 mt-5">
-                        <button className="btn btn-primary setBtnProject btnColor" type="button" >
+                        <button className="btn btn-primary setBtnProject btnColor" type="button" onClick={ update }>
                             Registrar Proyecto !!
                         </button>                       
                     </div> 
                     <legend>{ icons[0] } Proyectos Registrados</legend> 
                     <div id="divCards" className="card-group row g-3">
-                    { data &&
-                        data.allProjects.map( project =>                            
-                            <div className="col-md-4">
-                                <div className="card text-dark mb-3">
-                                    <div className="card-header headColor row g-0">
-                                        <div className="col-md-3 mt-1"><i className="fas fa-shield-virus iconCard"></i></div>
-                                        <div className="col-md-9">{ project.Nombre }</div>                                    
-                                    </div>
-                                    <div className="card-body">                                   
-                                        <h5 className="card-title">{ project.Lider.Nombre } { project.Lider.Apellido }</h5>
-                                        <small className="text-muted">ID Lider: { project.Lider._id }</small> <br />
-                                        <small className="text-muted">Fecha de Inicio: { project.Fecha_Inicio }</small> <br />
-                                        <small className="text-muted">Fase: { project.Fase }</small> <br />
-                                        <small className="text-muted">Estado: { project.Estado }</small> 
-                                    </div>
-                                    <div className="card-footer btnCard">
-                                        <section>
-                                            <button type="button" className="btn btn-primary btn-sm btnCardColor" data-bs-toggle="modal" 
-                                                data-bs-target="#modalEditProjectLider" onClick={ () => {
-                                                    setIdProject(project._id); setNameProject(project.Nombre); setObjGener(project.Ob_Generales);
-                                                    setObjEspec(project.Ob_Especificos); setPresup(project.Presupuesto); 
-                                                    setFechaInicio(project.Fecha_Inicio); setFechaFin(project.Fecha_Terminacion);
-                                                } }>
-                                                Ver y/o Actualizar Proyecto
-                                            </button>
-                                        </section>                                          
-                                        <section className="mt-1">
-                                            <button type="button" className="btn btn-secondary btn-sm btn2" data-bs-toggle="modal" 
-                                                data-bs-target="#modalAvance" onClick={ () => {
-                                                    project.Avances.forEach(avance => {
-                                                        setIdStudent(avance.Estudiante._id); setFechaAdvance(avance.Fecha); 
-                                                        setDescripAdva(avance.Descripcion); setObserAdva(avance.Observaciones);                                                                                                                       
-                                                    });
-                                                    project.Inscripciones.forEach(inscr => {
-                                                        setEstadoIns(inscr.Estado); setIngresoIns(inscr.Fecha_Ingreso); 
-                                                        setEgresoIns(inscr.Fecha_Egreso); setIdIns(inscr.Estudiante._id);
-                                                    });
-                                                } }>
-                                                Ver Avances e Inscripciones
-                                            </button>     
-                                        </section>                                                             
-                                    </div>
+                    { data.allProjects.map( project =>                                                    
+                        <div className="col-md-4">
+                            <div className="card text-dark mb-3">
+                                <div className="card-header headColor row g-0">
+                                    <div className="col-md-3 mt-1"><i className="fas fa-shield-virus iconCard"></i></div>
+                                    <div className="col-md-9">{ project.Nombre }</div>                                    
                                 </div>
-                            </div>                                      
-                        )
-                    } 
+                                <div className="card-body">                                   
+                                    <h5 className="card-title">{ project.Lider.Nombre } { project.Lider.Apellido }</h5>
+                                    <small className="text-muted">ID Lider: { project.Lider._id }</small> <br />
+                                    <small className="text-muted">Fecha de Inicio: { project.Fecha_Inicio }</small> <br />
+                                    <small className="text-muted">Fase: { project.Fase }</small> <br />
+                                    <small className="text-muted">Estado: { project.Estado }</small> 
+                                </div>
+                                <div className="card-footer btnCard">
+                                    <section>
+                                        <button type="button" className="btn btn-primary btn-sm btnCardColor" data-bs-toggle="modal" 
+                                            data-bs-target="#modalEditProjectLider" onClick={ () => {
+                                                setIdProject(project._id); setNameProject(project.Nombre); setObjGener(project.Ob_Generales);
+                                                setObjEspec(project.Ob_Especificos); setPresup(project.Presupuesto); 
+                                                setFechaInicio(project.Fecha_Inicio); setFechaFin(project.Fecha_Terminacion);
+                                            } }>
+                                            Ver y/o Actualizar Proyecto
+                                        </button>
+                                    </section>                                          
+                                    <section className="mt-1">
+                                        <button type="button" className="btn btn-secondary btn-sm btn2" data-bs-toggle="modal" 
+                                            data-bs-target="#modalAvance" onClick={ () => { 
+                                                setIdSearch(project._id); 
+                                                getInscriptions({ variables: { id: project._id } });
+                                            } }>
+                                            Ver Avances e Inscripciones
+                                        </button>     
+                                    </section>                                                             
+                                </div>
+                            </div>
+                        </div>                                  
+                    ) } 
                     </div>                                                             
                 </form>                   
                 <div className="modal fade" id="modalEditProjectLider" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,7 +150,7 @@ export default function ProjectsPage() {
                                 <h5 className="modal-title" id="exampleModalLabel">Ver Detalles del Proyecto y Actualizar</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="modal-body m-3 mt-1">
+                            <div className="modal-body m-3 mt-1">                                
                                 <form className="row g-3">
                                     <div className="col-md-6">
                                         <label className="form-label-sm">ID del Proyecto</label>
@@ -146,20 +158,19 @@ export default function ProjectsPage() {
                                     </div>
                                     <div className="col-md-6">
                                         <label className="form-label-sm">Nombre del Proyecto</label>
-                                        <input type="text" className="form-control form-control-sm" value={ nameProject } />
+                                        <input type="text" className="form-control form-control-sm" placeholder={ nameProject } />
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label-sm">Objetivos Generales</label>
-                                        <textarea className="form-control form-control-sm" placeholder="Objetivos Generales" value={ objGener }/>
+                                        <textarea className="form-control form-control-sm" placeholder={ objGener } />
                                     </div>
                                     <div className="col-md-12">
                                         <label className="form-label-sm">Objetivos Especificos</label>
-                                        <textarea className="form-control form-control-sm" placeholder="Objetivos Especificos" value={ objEspec } />
-                                        
+                                        <textarea className="form-control form-control-sm" placeholder={ objEspec } />                                        
                                     </div>
                                     <div className="col-md-4">
                                         <label className="form-label-sm">Presupuesto</label>
-                                        <input type="number" className="form-control form-control-sm" value={ presup } />
+                                        <input type="number" className="form-control form-control-sm" placeholder={ presup } />
                                     </div>
                                     <div className="col-md-4">
                                         <label className="form-label-sm">Fecha de Inicio</label>
@@ -169,11 +180,11 @@ export default function ProjectsPage() {
                                         <label className="form-label-sm">Fecha de Terminacion</label>
                                         <input readOnly type="text" className="form-control form-control-sm" value={ fechaFin } />
                                     </div>
-                                </form>
+                                </form>                                    
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary btnColor">Guardar Cambios</button>
+                                <button type="button" className="btn btn-primary btnColor" onClick={ update }>Guardar Cambios</button>
                             </div>
                         </div>
                     </div>
@@ -185,42 +196,49 @@ export default function ProjectsPage() {
                                 <h5 className="modal-title" id="exampleModalLabel">
                                     Avances e Inscripciones al Proyecto actual
                                 </h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={ () => {
-                                    setIdStudent(''); setFechaAdvance(''); setDescripAdva(''); setObserAdva(''); 
-                                    setEstadoIns(''); setIngresoIns(''); setEgresoIns(''); setIdIns('');
-                                } } />
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={ () => {  } } />
                             </div>
                             <div className="modal-body m-3 mt-0">
                                 <legend className='divModalAdvances'>{ icons[1] }Avances del Proyecto</legend>
                                 <table className="table table-striped table-hover table-sm">
                                     <thead>
                                         <tr className="table-primary">
-                                            <th>ID Estudiante</th>
+                                            <th>ID Estud.</th>
+                                            <th>Nombre</th>
                                             <th>Fecha</th>
                                             <th>Descripcion</th>
                                             <th>Observaciones</th>
                                             <th>Agregar</th>
                                         </tr>                                        
                                     </thead>
-                                    <tbody>                                                          
-                                        <tr>
-                                            <td>{ idStudent }</td>
-                                            <td>{ fecha(fechaAdvance) }</td>
-                                            <td>{ descripAdva }</td>
-                                            <td><input type="text" className="form-control form-control-sm" placeholder={ obserAdva }/></td>
-                                            <td>
-                                                <button id="btnAdd">
-                                                    <img id="iconAdd" src={ IconAdd } alt="Add Commit" title="Agregar Observacion"/>
-                                                </button>
-                                            </td>
-                                        </tr>                                                                                    
+                                    <tbody>                                          
+                                        { dataAdvance.allAdvances.map(advance => { 
+                                            if (advance.Proyecto._id === idSearch) {
+                                                return (
+                                                <tr>
+                                                    <th>{ advance.Estudiante.Identificacion }</th>
+                                                    <td>{ `${advance.Estudiante.Nombre} ${advance.Estudiante.Apellido}` }</td>
+                                                    <td>{ fecha(advance.Fecha) }</td>
+                                                    <td>{ advance.Descripcion }</td>
+                                                    <td><input type="text" className="form-control form-control-sm" 
+                                                        placeholder={ advance.Observaciones }/></td>
+                                                    <td>
+                                                        <button id="btnAdd">
+                                                            <img id="iconAdd" src={ IconAdd } alt="Add Commit" title="Agregar Observacion"/>
+                                                        </button>
+                                                    </td>
+                                                </tr>   
+                                                )
+                                            }                                           
+                                        } ) }                                                        
                                     </tbody>
                                 </table>
                                 <legend className='divModalAdvances'>{ icons[2] }Estudiantes Inscritos</legend>
                                 <table className="table table-striped table-hover table-sm">
                                     <thead>
                                         <tr className="table-primary">
-                                            <th>ID Estudiante</th>
+                                            <th>ID Estud.</th>
+                                            <th>Nombre</th>
                                             <th>Fecha Ingreso</th>
                                             <th>Fecha Egreso</th>
                                             <th>Estado</th>
@@ -228,28 +246,31 @@ export default function ProjectsPage() {
                                         </tr>                                        
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th>{ idIns }</th>
-                                            <td>{ ingresoIns }</td>
-                                            <td>{ egresoIns }</td>
-                                            <td>{ estadoIns }</td>
-                                            <td>
-                                                <button className="btnAvance">
-                                                    <img id="iconAdd" src={ IconAcept } alt="Add Student" title="Agregar Estudiante"/>
-                                                </button>
-                                                <button className="btnAvance">
-                                                    <img id="iconAdd" src={ IconCancel } alt="Delete Student" title="Eliminra Estudiante"/>
-                                                </button>
-                                            </td>
-                                        </tr>                                        
+                                        { dataInsc && dataInsc.filterInscription.map(insc => {                                                
+                                            console.log(dataInsc.filterInscription.length);
+                                            return (
+                                                <tr>
+                                                    <th>{ insc.Estudiante.Identificacion }</th>
+                                                    <td>{ `${insc.Estudiante.Nombre} ${insc.Estudiante.Apellido}` }</td>
+                                                    <td>{ insc.Fecha_Ingreso }</td>
+                                                    <td>{ insc.Fecha_Egreso }</td>
+                                                    <td>{ insc.Estado }</td>
+                                                    <td>
+                                                        <button className="btnAvance">
+                                                            <img id="iconAdd" src={ IconAcept } alt="Add Student" title="Agregar Estudiante"/>
+                                                        </button>
+                                                        <button className="btnAvance">
+                                                            <img id="iconAdd" src={ IconCancel } alt="Delete Student" title="Eliminra Estudiante"/>
+                                                        </button>
+                                                    </td>
+                                                </tr>   
+                                            )                                                
+                                        }) }
                                     </tbody>
                                 </table>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={ () => {
-                                    setIdStudent(''); setFechaAdvance(''); setDescripAdva(''); setObserAdva('');
-                                    setEstadoIns(''); setIngresoIns(''); setEgresoIns(''); setIdIns('');
-                                } }>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={ () => {  } }>
                                     Cancelar
                                 </button>
                             </div>
