@@ -14,7 +14,7 @@ const typeInscription = gql `
     }
     type Query {
         allInscriptions( Estado: StateInscription ): [Inscription]
-        getOneInscription( _id: ID! ) : Inscription
+        filterInscription( _id: ID! ) : [Inscription]
     }
     type Mutation {
         addInscription (

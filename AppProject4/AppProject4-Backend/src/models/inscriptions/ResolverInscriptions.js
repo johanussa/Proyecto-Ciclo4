@@ -15,9 +15,9 @@ const resolverInscription = {
                 else { return inscriptions; } 
             }               
         },
-        getOneInscription: async (parent, args) => {
-            const query = { _id: args._id };
-            const inscription = await InscriptionModel.findById(query)
+        filterInscription: async (parent, args) => {
+            const query = { Proyecto: args._id };
+            const inscription = await InscriptionModel.find(query)
                 .populate('Proyecto').populate('Estudiante');
             if (inscription) { return inscription; } 
             else { console.log("El ID " + args._id + " No Existe en DB"); }
