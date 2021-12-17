@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 import IconAdd from '../../../components/images/iconAdd.png';
 import IconAcept from '../../../components/images/iconAcept.png';
 import IconCancel from '../../../components/images/iconCancel.png';
-import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import IconProject from '../../../components/images/iconProyects.png';
-import { Get_ProjectsLider, Get_Advances, Get_Inscriptions } from '../../../graphQL/Projects/QueriesLider';
-import { New_Project, Update_Project, Update_Advance, Update_Inscription } from '../../../graphQL/Projects/MutationLider';
+import { Get_Projects, Get_Advances, Get_Inscriptions } from '../../../graphql/projects/Queries';
+import { New_Project, Update_Project, Update_Advance, Update_Inscription } from '../../../graphql/projects/Mutations';
 
 export default function ProjectsPage() {
 
@@ -17,7 +17,7 @@ export default function ProjectsPage() {
         <i className="fab fa-buffer iconArray" />
     ];
 
-    const [getProjects, { loading, error, data }] = useLazyQuery(Get_ProjectsLider);
+    const [getProjects, { loading, error, data }] = useLazyQuery(Get_Projects);
     const [getInscriptions, { loading : loadInsc, data : dataInsc }] = useLazyQuery(Get_Inscriptions);
     const [addProject, { data : dataProject, loading : loadProject, error : errorProject }] = useMutation(New_Project);
     const [getAdvances, { loading : loadAdvance, error : errorAdvance, data : dataAdvance }] = useLazyQuery(Get_Advances);
@@ -76,7 +76,8 @@ export default function ProjectsPage() {
             </div>
             <div id="containMain" className="container border mt-5">
                 <form className="row g-3 m-4 mt-2">
-                    <div> <legend>{ icons[0] } Registrar un Nuevo Proyecto</legend> </div>                                      
+                    <a id='linkView' className="btn btn-primary btnColor" type="button" href="#register">Ver sus Proyectos</a>                               
+                    <div> <legend>{ icons[0] } Registrar un Nuevo Proyecto</legend> </div>    
                     <div className="col-md-6">
                         <label htmlFor="inputNomP" className="form-label">Nombre del Proyecto</label>
                         <input type="text" className="form-control" id="inputNomP" autoComplete="none"
@@ -111,7 +112,7 @@ export default function ProjectsPage() {
                             Registrar Proyecto !!
                         </button>                       
                     </div> 
-                    <legend>{ icons[0] } Proyectos Registrados</legend> 
+                    <legend id="register">{ icons[0] } Proyectos Registrados</legend> 
                     <div id="divCards" className="card-group row g-3">
                     { data && data.allProjects.map( project =>                                                    
                         <div className="col-md-4">
@@ -194,7 +195,7 @@ export default function ProjectsPage() {
                                         <label className="form-label-sm">Fecha de Terminacion</label>
                                         <input readOnly type="text" className="form-control form-control-sm" value={ fechaFin } />
                                     </div>
-                                </form>                                    
+                                </form>                 
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

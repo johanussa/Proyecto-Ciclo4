@@ -20,20 +20,52 @@ const New_Project = gql`
         }
     }
 `;
+const Add_Advance = gql `
+    mutation AddAdvance(
+        $proyecto: String!, 
+        $Estudiante: String!, 
+        $Descripcion: String!
+        ) {
+        addAdvance(
+            Proyecto: $proyecto, 
+            Estudiante: $Estudiante, 
+            Descripcion: $Descripcion
+        ) {
+            _id
+        }
+    }
+`;
+const Add_inscription = gql`
+    mutation AddInscription(
+        $proyecto: String!, 
+        $Estudiante: String!
+    ) {
+        addInscription(
+            Proyecto: $proyecto, 
+            Estudiante: $Estudiante
+        ) {
+            _id
+        }
+    }
+`;
 const Update_Project = gql`
     mutation UpdateProject(
         $id: ID!, 
-        $Nombre: String!, 
-        $Ob_Generales: String!, 
-        $Ob_Especificos: String!, 
-        $Presupuesto: Float!, 
+        $Nombre: String, 
+        $Ob_Generales: String, 
+        $Ob_Especificos: String, 
+        $Presupuesto: Float, 
+        $Estado: Estado_Proj,
+        $Fase: Fase_Proj
     ) {
         updateProject(
             _id: $id,
             Nombre: $Nombre,
             Ob_Generales: $Ob_Generales,
             Ob_Especificos: $Ob_Especificos,
-            Presupuesto: $Presupuesto
+            Presupuesto: $Presupuesto,
+            Estado: $Estado,
+            Fase: $Fase
         )
     }
 `;
@@ -51,11 +83,13 @@ const Update_Inscription = gql`
 const Update_Advance = gql`
     mutation UpdateAdvance(
         $id: ID!, 
-        $Observaciones: String!
+        $Observaciones: String
+        $Descripcion: String
     ) {
         updateAdvance(
             _id: $id, 
             Observaciones: $Observaciones
+            Descripcion: $Descripcion
         )
     }
 `;
@@ -76,7 +110,7 @@ const Add_Observation = gql`
 `;
 
 export { 
-    New_Project, Update_Project, 
-    Update_Inscription, Add_Observation, 
-    Update_Advance 
+    New_Project, Update_Project, Update_Inscription, 
+    Add_Observation, Update_Advance, Add_Advance,
+    Add_inscription
 }
