@@ -21,7 +21,8 @@ const typeAdvance = gql `
         ) : Advance
         updateAdvance(
             _id: ID!
-            Observaciones: String!
+            Observaciones: String
+            Descripcion: String
         ) : String
     }
 `
