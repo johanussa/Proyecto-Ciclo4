@@ -1,0 +1,30 @@
+.bodyUsers { 
+    background-color: rgb(255, 240, 240); 
+}
+.spanFilter {
+    height: 31px;
+    background-color: rgb(55, 113, 134);
+    color: #fff;
+}
+.inputFind {
+    max-width: 250px;
+}
+.divFilter {
+    margin-left: 10%;
+}
+.bordColor {
+    border-color: rgb(216, 216, 216);
+}
+.imgIcons {
+    width: 20px;
+}
+.btnIcons {
+    border: none;
+    background-color: inherit;
+    margin: 0;
+    padding: 0 5px 0;
+}
+.divTable {
+    max-width: 88%;    
+    margin-left: 6%;
+}

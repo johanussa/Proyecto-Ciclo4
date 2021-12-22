@@ -71,7 +71,7 @@ export default function ProjectsPage() {
         <div className="bodyLider"> 
             <div className="container">
                 <img id="iconProject" src={ IconProject } alt="Project" />
-                <h2 id="titleLogo">Modulo de Gestion de Proyectos</h2>
+                <h2 id="titleLogo">Modulo de Gestion de Proyectos - Lider</h2>
                 <hr className="hrProject" />
             </div>
             <div id="containMain" className="container border mt-5">

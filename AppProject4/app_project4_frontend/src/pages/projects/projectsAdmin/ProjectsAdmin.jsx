@@ -49,7 +49,7 @@ export default function ProjectsAdmin() {
             </div>
             <div id="containMain" className="container border mt-5">
                 <div className="container mt-4">
-                    <h3 className='m-5'>{ <i className="fab fa-buffer iconArray" /> } Proyectos Registrados</h3> 
+                    <h4 className='m-5'>{ <i className="fab fa-buffer iconArray" /> } Proyectos Registrados</h4> 
                     <div className=" row g-3">
                     { 
                         data && data.allProjects.map( project => {                                                     
@@ -83,7 +83,7 @@ export default function ProjectsAdmin() {
                                                     <option value="TERMINADO">TERMINADO</option>
                                                 </select>
                                             </section>                                          
-                                            <section className="mt-1">
+                                            <section className="mt-2">
                                                 <button type="button" className="btn btn-secondary btn-sm btnCardColor" onClick={ () => {  
                                                     if (Fase !== "" && Estado !== "") { 
                                                         updateProject({ variables: { id: project._id, Fase, Estado } }); 
@@ -109,8 +109,8 @@ export default function ProjectsAdmin() {
                         } ) 
                     }
                     </div>
-                </div>
-            </div>
+                </div> <br />
+            </div> <br />
         </div>
     )
 }
