@@ -1,10 +1,10 @@
 import Swal from 'sweetalert2';
 import './css/styleProjectPage.css';
 import React, { useEffect, useState } from 'react';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import IconAdd from '../../../components/images/iconAdd.png';
 import IconAcept from '../../../components/images/iconAcept.png';
 import IconCancel from '../../../components/images/iconCancel.png';
-import { useLazyQuery, useMutation } from '@apollo/client';
 import IconProject from '../../../components/images/iconProyects.png';
 import { Get_Projects, Get_Advances, Get_Inscriptions } from '../../../graphql/projects/Queries';
 import { New_Project, Update_Project, Update_Advance, Update_Inscription } from '../../../graphql/projects/Mutations';
@@ -18,12 +18,12 @@ export default function ProjectsPage() {
     ];
 
     const [getProjects, { loading, error, data }] = useLazyQuery(Get_Projects);
-    const [getInscriptions, { loading : loadInsc, data : dataInsc }] = useLazyQuery(Get_Inscriptions);
-    const [addProject, { data : dataProject, loading : loadProject, error : errorProject }] = useMutation(New_Project);
+    const [getInscriptions, { data : dataInsc }] = useLazyQuery(Get_Inscriptions);
+    const [addProject, { data : dataProject, error : errorProject }] = useMutation(New_Project);
+    const [updateProject, { data : dataUpProj, error : errorUpProj }] = useMutation(Update_Project);
+    const [updateAdvance, { data : dataUpAdva, error : errorUpAdva }] = useMutation(Update_Advance);
+    const [updateInscription, { data : dataUpIns, error : errorUpIns }] = useMutation(Update_Inscription);
     const [getAdvances, { loading : loadAdvance, error : errorAdvance, data : dataAdvance }] = useLazyQuery(Get_Advances);
-    const [updateProject, { data : dataUpProj, loading : loadUpProj, error : errorUpProj }] = useMutation(Update_Project);
-    const [updateAdvance, { data : dataUpAdva, loading : loadUpAdva, error : errorUpAdva }] = useMutation(Update_Advance);
-    const [updateInscription, { data : dataUpIns, loading : loadUpIns, error : errorUpIns }] = useMutation(Update_Inscription);
     
     const [Lider, setLider] = useState('');   
     const [Nombre, setNombre] = useState('');   
@@ -39,15 +39,15 @@ export default function ProjectsPage() {
     useEffect(() => {  
         getProjects(); 
         getAdvances();    
-        if (error || errorAdvance || errorProject || errorUpProj) { 
+        if (error || errorAdvance || errorProject || errorUpProj || errorUpAdva || errorUpIns) { 
             Swal.fire({
                 icon: 'error',
                 title: 'Lo Siento, Algo Salio Mal!!',
                 text: 'Error al consultar los datos de los proyectos',
             });  
         }                
-    }, [data, error, dataAdvance, errorAdvance, dataInsc, errorProject, 
-        dataProject, getProjects, getAdvances, errorUpProj]);    
+    }, [data, error, dataAdvance, errorAdvance, dataInsc, errorProject, dataUpAdva, errorUpIns,
+        errorUpAdva, dataProject, getProjects, getAdvances, errorUpProj, dataUpProj, dataUpIns]);    
           
     function fecha(fecha) {
         const newFecha = fecha.split("T"); 

@@ -17,7 +17,12 @@ const Get_Projects = gql`
                 Identificacion
                 Nombre
                 Apellido
-            }       
+            }      
+            Inscripciones {
+                Estudiante {
+                    _id
+                }
+            }   
         }
     }
 `;

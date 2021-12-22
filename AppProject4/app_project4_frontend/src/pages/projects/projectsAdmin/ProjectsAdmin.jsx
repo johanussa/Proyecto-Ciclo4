@@ -8,7 +8,7 @@ import IconProject from '../../../components/images/iconProyects.png';
 export default function ProjectsAdmin() {
 
     const [getProjects, { loading, error, data }] = useLazyQuery(Get_Projects);
-    const [updateProject, { error : errorUpProj }] = useMutation(Update_Project);
+    const [updateProject, { data : dataUpProj, error : errorUpProj }] = useMutation(Update_Project);
 
     const [Fase, setFase] = useState('');
     const [Estado, setEstado] = useState('');
@@ -22,8 +22,7 @@ export default function ProjectsAdmin() {
                 text: 'Error al consultar los datos de los proyectos',
             });  
         }                
-        console.log(data);
-    }, [data, error, errorUpProj, getProjects]);     
+    }, [data, error, errorUpProj, getProjects, dataUpProj]);     
     
     function update() { 
         if (!error || !errorUpProj) {
@@ -33,8 +32,9 @@ export default function ProjectsAdmin() {
                 showConfirmButton: false,
                 timer: 2000
             }); 
-        } getProjects(); 
-        setEstado(''); setFase('');           
+        }  
+        setEstado(''); setFase(''); 
+        getProjects();          
     }
     
     if (loading) { 
@@ -86,11 +86,18 @@ export default function ProjectsAdmin() {
                                             <section className="mt-1">
                                                 <button type="button" className="btn btn-secondary btn-sm btnCardColor" onClick={ () => {  
                                                     if (Fase !== "" && Estado !== "") { 
-                                                        updateProject({ variables: { id: project._id, Fase, Estado } }); update(); }  
+                                                        updateProject({ variables: { id: project._id, Fase, Estado } }); 
+                                                        update(); getProjects(); }  
                                                     else { 
-                                                        if (Estado !== "") { 
-                                                            updateProject({ variables: { id: project._id, Estado, Fase: "INICIADO" } }); update(); } 
-                                                        else { if (Fase !== "") { updateProject({ variables: { id: project._id, Fase } }); update(); } } 
+                                                        if (Estado === "ACTIVO") { 
+                                                            updateProject({ variables: { id: project._id, Estado, Fase: "INICIADO" } }); 
+                                                            update(); getProjects(); } 
+                                                        else { if (Estado === "INACTIVO") { 
+                                                                updateProject({ variables: { id: project._id, Estado } }); 
+                                                                update(); getProjects(); } 
+                                                            else { if (Fase !== "") { 
+                                                                updateProject({ variables: { id: project._id, Fase } }); 
+                                                                update(); getProjects(); }  }  }                                                            
                                                     } } } >
                                                     Actualizar Proyecto
                                                 </button>     

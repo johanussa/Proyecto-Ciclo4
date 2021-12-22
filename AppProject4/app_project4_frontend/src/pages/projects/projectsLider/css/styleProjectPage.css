@@ -18,6 +18,11 @@ legend {
     font-size: 30px;
     margin-left: 25px;
 }
+h4 {
+    font-family: serif;
+    font-size: 30px;
+    margin-left: 25px;
+}
 #floatingTextarea { 
     min-height: 100px; 
 }
