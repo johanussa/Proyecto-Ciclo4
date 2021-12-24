@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const Get_Users = gql`
-    query AllUsers {
-        allUsers {
+    query AllUsers( $rol: Enum_Rol ) {
+        allUsers( Rol: $rol ) {
             _id
             Identificacion
             Nombre

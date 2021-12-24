@@ -1,5 +1,6 @@
 .bodyUsers { 
     background-color: rgb(255, 240, 240); 
+    min-height: 100vh;
 }
 .spanFilter {
     height: 31px;
@@ -27,4 +28,8 @@
 .divTable {
     max-width: 88%;    
     margin-left: 6%;
+}
+.headColorUser {
+    background-color: crimson;
+    color: #fff;
 }

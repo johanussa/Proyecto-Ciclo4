@@ -249,7 +249,7 @@ export default function ProjectsPage() {
                                                     </td>
                                                 </tr>   
                                                 )
-                                            }                                           
+                                            } else return null;                                          
                                         } ) }                                                        
                                     </tbody>
                                 </table>
