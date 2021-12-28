@@ -2,37 +2,40 @@ import React, { useEffect, useState } from 'react';
 import './css/estiloUsers.css';
 import Swal from 'sweetalert2';
 import IconUser from '../../components/images/iconUser.png';
-import { Get_Users } from '../../graphql/users/Queries';
+import { Get_Users, Get_One_User } from '../../graphql/users/Queries';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import IconEdit from '../../components/images/iconEdit.png';
 import IconDelete from '../../components/images/iconDelete.png';
-import { Update_User } from '../../graphql/users/Mutations';
+import { Update_User, Delete_User } from '../../graphql/users/Mutations';
 
 export default function UsersPage() {
 
     const [getUsers, { loading, error, data }] = useLazyQuery(Get_Users);
+    const [getOneUser, { loading : loadOne, error : errorOne, data : dataOne }] = useLazyQuery(Get_One_User);
     const [updateUser, { error : errUser, data : dataUser }] = useMutation(Update_User);
+    const [deleteUser, { error : errDelete, data : dataDelete }] = useMutation(Delete_User);
 
     const [Rol, setRol] = useState('');
     const [IdDB, setIdDB] = useState('');
     const [Email, setEmail] = useState('');
+    const [render, setRender] = useState(0);
     const [Nombre, setNombre] = useState('');
     const [Estado, setEstado] = useState('');
     const [Apellido, setApellido] = useState('');
     const [Identificacion, setIdentificacion] = useState('');
-    const [render, setRender] = useState(0);
+    const [showOne, setShowOne] = useState(false);
 
     useEffect(() => {
-        if (error || errUser) { 
+        if (error || errUser || errorOne) { 
             Swal.fire({
                 icon: 'error',
                 title: 'Lo Siento, Algo Salio Mal!!',
                 text: 'Error al consultar los datos de los usuarios',
             });  
         } 
-    }, [error, data, errUser, dataUser]);
+    }, [error, data, errUser, dataUser, dataDelete, errorOne, dataOne]);
 
-    useEffect(() => { getUsers(); }, [render, getUsers])
+    useEffect(() => { getUsers(); }, [render, getUsers]);
 
     function update() {
         if (!errUser) {
@@ -48,6 +51,29 @@ export default function UsersPage() {
     function filtrar(valor) {
         if (valor === "0") { getUsers(); } 
         else { getUsers({ variables : { rol : valor } }); setRender(render +1); }
+    }
+    function deleteU(id) {
+        Swal.fire({
+            title: `Esta seguro que desea Eliminar este Usuario ${ id }?`,
+            text: "No podra recuperarlo despues de eliminarlo!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminarlo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUser({ variables : { Identificacion : id } });
+                if (!errDelete) {
+                    Swal.fire(
+                        'Eliminado!',
+                        `El usuario ${ id } ha sido eliminado`,
+                        'success'
+                    );
+                    setRender(render +1);
+                }
+            }
+        });
     }
 
     if (loading) { return <div className="container"><h5 className='container pt-5'>Loading Data ...</h5></div> }
@@ -75,8 +101,18 @@ export default function UsersPage() {
                     </div>
                     <div className='col-md-6'>
                         <div className="input-group">
-                            <span className="input-group-text spanFilter">Buscar Usuario :</span>
-                            <input type="text" className="form-control form-control-sm inputFind" placeholder="Ingrese la Identificacion del usuario"/>
+                            { loadOne ? 
+                                <button type='button' className="input-group-text spanFilter" >
+                                    Cargando
+                                </button> : 
+                                <button type='button' className="input-group-text spanFilter" onClick={ () => { 
+                                    getOneUser({ variables : { Identificacion } });
+                                    setShowOne(true); } }>
+                                    Buscar Usuario
+                                </button>                                
+                            }
+                            <input type="text" className="form-control form-control-sm inputFind" onChange={ e => { 
+                                setIdentificacion(e.target.value); } } placeholder="Ingrese la Identificacion del usuario"/>
                         </div>
                     </div>                    
                 </form>
@@ -95,7 +131,7 @@ export default function UsersPage() {
                         </thead>
                         <tbody>
                         {
-                            data && data.allUsers.map(user => {
+                            data && !showOne && data.allUsers.map(user => {
                                 return(
                                     <tr>
                                         <td>{ user.Identificacion }</td>
@@ -114,7 +150,7 @@ export default function UsersPage() {
                                                 }>
                                                     <img className='imgIcons' src={ IconEdit } alt="Editar" title='Editar'/>
                                                 </button>
-                                                <button className='btnIcons'>
+                                                <button className='btnIcons' onClick={ () => { deleteU(user.Identificacion); } }>
                                                     <img className='imgIcons' src={ IconDelete } alt='Eliminar' title='Eliminar'/>
                                                 </button>
                                             </section>
@@ -123,8 +159,41 @@ export default function UsersPage() {
                                 )
                             })
                         }
+                        {
+                            dataOne && dataOne.getOneUser && showOne ?                             
+                            <tr>
+                                <td>{ dataOne.getOneUser.Identificacion }</td>
+                                <td>{ dataOne.getOneUser.Nombre }</td>
+                                <td>{ dataOne.getOneUser.Apellido }</td>
+                                <td>{ dataOne.getOneUser.Email }</td>
+                                <td>{ dataOne.getOneUser.Rol }</td>
+                                <td>{ dataOne.getOneUser.Estado }</td>
+                                <td>
+                                    <section>
+                                        <button className='btnIcons' data-bs-toggle="modal" data-bs-target="#modalEditUser" onClick={
+                                            () => {
+                                                setIdDB(dataOne.getOneUser._id); setIdentificacion(dataOne.getOneUser.Identificacion); 
+                                                setNombre(dataOne.getOneUser.Nombre); setApellido(dataOne.getOneUser.Apellido); 
+                                                setEmail(dataOne.getOneUser.Email); setRol(dataOne.getOneUser.Rol); setEstado(dataOne.getOneUser.Estado);
+                                            }
+                                        }>
+                                            <img className='imgIcons' src={ IconEdit } alt="Editar" title='Editar'/>
+                                        </button>
+                                        <button className='btnIcons' onClick={ () => { deleteU(dataOne.getOneUser.Identificacion); } }>
+                                            <img className='imgIcons' src={ IconDelete } alt='Eliminar' title='Eliminar'/>
+                                        </button>
+                                    </section>
+                                </td>
+                            </tr> : null
+                        }
                         </tbody>
                     </table> 
+                    { showOne && !loadOne ?  
+                        <div className='container divbtnShow'>
+                            <button className="btn btn-danger setBtnProject mb-3" type="button" onClick={ () => { setShowOne(false); } }>
+                                Mostrar Todos los Usuarios
+                            </button>
+                        </div> : null }
                 </div>
             </div>  <br />   
             <div className="modal fade" id="modalEditUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -13,5 +13,18 @@ const Get_Users = gql`
         }
     }
 `;
+const Get_One_User = gql`
+    query GetOneUser( $Identificacion: String! ) {
+        getOneUser( Identificacion: $Identificacion ) {
+            _id
+            Identificacion
+            Nombre
+            Apellido
+            Email
+            Rol
+            Estado
+        }
+    }
+`;
 
-export { Get_Users }
+export { Get_Users, Get_One_User }

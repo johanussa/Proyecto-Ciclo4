@@ -19,5 +19,14 @@ const Update_User = gql`
         )
     }
 `;
+const Delete_User = gql`
+    mutation DeleteUser(
+        $Identificacion: String!
+    ) {
+        deleteUser(
+            Identificacion: $Identificacion
+        )
+    }
+`;
 
-export { Update_User }
+export { Update_User, Delete_User }
