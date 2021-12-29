@@ -1,0 +1,84 @@
+.bodyLogin { 
+    background-color: crimson;   
+    background-image: url('../../../components/images/FondoLogin.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: sans-serif;
+    height: 100vh;
+}
+.login-box {
+    width: 480px;
+    height: 520px;
+    color: rgb(181, 243, 250);
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 90px 30px;
+}
+.login-box .logo {
+    margin-top: 50px;
+    width: 160px;
+    position: absolute;
+    top: -55px;
+    left: calc(50% - 80px);
+}
+.login-box .labelLog {    
+    padding: 0;
+    display: block;
+    font-family: sans-serif;
+    text-shadow: 1px 1px 5px black;
+}
+.login-box .titleLog {
+    margin: 0;
+    padding: 20px 0 10px;
+    text-shadow: 1px 1px 5px black;
+    font-family: serif;
+    text-align: center;
+    font-size: 28px;
+}
+.login-box .inputLog {
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    font-family: sans-serif;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: rgb(100, 16, 16);
+    font-size: 16px;
+}
+.login-box #btnLog {
+    width: 150px;
+    display: block;
+    margin: auto;
+    border: none;
+    outline: none;
+    height: 35px;
+    color: #fff;
+    font-size: 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    background: rgb(15, 81, 117);
+}
+.login-box #btnLog:hover {
+    background-color: rgb(100, 16, 16);
+}
+.login-box .linkLogin {    
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(100, 16, 16);       
+}
+.login-box .linkLogin:hover {
+    color: #fff;
+}
+.divLink {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+.divLink2 {
+    text-align: center;
+    margin-top: 20px;
+}
